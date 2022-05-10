@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Connection>
+    <Server>jdbc:mysql://localhost</Server>
+    <Database>film_manager</Database>
+    <Username>root</Username>
+    <Password></Password>
+</Connection>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="berral.francisco.Film_Manager.Main_Menu_Controller">
+   <children>
+      <ImageView fitHeight="425.0" fitWidth="750.0">
+         <image>
+            <Image url="@../../../images/image.jpg" />
+         </image>
+      </ImageView>
+      <Button layoutX="305.0" layoutY="173.0" mnemonicParsing="false" onAction="#switchToCinemas" prefHeight="45.0" prefWidth="142.0" text="CINEMAS" />
+      <Button layoutX="304.0" layoutY="229.0" mnemonicParsing="false" onAction="#switchToFilms" prefHeight="45.0" prefWidth="142.0" text="FILMS" />
+      <Button layoutX="304.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToProyections" prefHeight="45.0" prefWidth="142.0" text="PROYECTIONS" />
+      <Label layoutX="285.0" layoutY="36.0" prefHeight="76.0" prefWidth="180.0" text="SELECT" textFill="#ffd400">
+         <font>
+            <Font name="System Bold Italic" size="50.0" />
+         </font>
+      </Label>
+      <Label layoutX="241.0" layoutY="97.0" prefHeight="76.0" prefWidth="269.0" text="CATEGORY" textFill="#ffd400">
+         <font>
+            <Font name="System Bold Italic" size="50.0" />
+         </font>
+      </Label>
+      <Button layoutX="305.0" layoutY="344.0" mnemonicParsing="false" onAction="#switchToStart" prefHeight="45.0" prefWidth="142.0" text="BACK" />
+   </children>
+</AnchorPane>
