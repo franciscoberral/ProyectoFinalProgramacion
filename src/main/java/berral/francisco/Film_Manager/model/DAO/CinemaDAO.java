@@ -38,8 +38,9 @@ public class CinemaDAO implements ICinemaDAO{
 		return result;
 	}
 
-	public boolean delete(Integer id) {
+	public boolean delete(Cinema c) {
 		boolean result = false;
+		Integer id = c.getID_C();
 		myConnection = Connect.getConnect();
 		String query = "DELETE FROM Cinema WHERE ID_C = '" +id+ "'";
 		

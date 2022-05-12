@@ -1,6 +1,7 @@
 package berral.francisco.Film_Manager.model.DAO;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,12 +23,14 @@ public class ProyectionDAO {
 	public boolean insert(Proyection p) {
 		boolean result = false;
 		myConnection = Connect.getConnect();
-		String query = "INSERT INTO Proyection (ID_C, ID_F) VALUES (?,?)";
+		String query = "INSERT INTO Proyection (ID_C, ID_F, StartDate, FinishDate) VALUES (?,?,?,?)";
 		
 		try {
 			PreparedStatement sentence = myConnection.prepareStatement(query);
 			sentence.setInt(1, p.getC().getID_C());
 			sentence.setInt(2, p.getF().getID_F());
+			sentence.setDate(3, Date.valueOf(p.getStartDate()));
+			sentence.setDate(4, Date.valueOf(p.getFinishDate()));
 			sentence.executeUpdate();
 			result=true;
 		}catch(SQLException e) {
@@ -39,7 +42,7 @@ public class ProyectionDAO {
 	public List<Proyection> getAll() {
 		List<Proyection> list = new ArrayList<Proyection>();
 		myConnection = Connect.getConnect();
-		String query = "SELECT ID_C, ID_F FROM Proyection";
+		String query = "SELECT ID_C, ID_F, StartDate, FinishDate FROM Proyection";
 		
 		try {
 			Statement st = myConnection.createStatement();
@@ -51,6 +54,8 @@ public class ProyectionDAO {
 				aux.setC(c);
 				Film f = fDAO.get(rs.getInt(2));
 				aux.setF(f);
+				aux.setFinishDate(rs.getDate(3).toLocalDate());
+				aux.setStartDate(rs.getDate(4).toLocalDate());
 				list.add(aux);
 			}
 		}catch(SQLException e) {

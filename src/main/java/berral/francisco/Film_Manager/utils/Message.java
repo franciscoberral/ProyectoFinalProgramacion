@@ -19,11 +19,11 @@ public class Message {
 		s.toFront();
 	}
 	
-	public static void error(String title, String header, String content) throws IOException {
+	public static void error() throws IOException {
 		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle(title);
-		alert.setHeaderText(header);
-		alert.setContentText(content);
+		alert.setTitle("Error");
+		alert.setHeaderText("aaaa");
+		alert.setContentText("aaaaa");
 		alert.show();
 		
 		Stage s = (Stage) alert.getDialogPane().getScene().getWindow();

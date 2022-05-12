@@ -38,8 +38,9 @@ public class FilmDAO implements IFilmDAO{
 		return result;
 	}
 
-	public boolean delete(Integer id) {
+	public boolean delete(Film f) {
 		boolean result = false;
+		Integer id = f.getID_F();
 		myConnection = Connect.getConnect();
 		String query = "DELETE FROM Film WHERE ID_F = '" +id+ "'";
 		

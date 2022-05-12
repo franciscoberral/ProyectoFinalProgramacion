@@ -62,5 +62,7 @@
         </items>
       </SplitPane>
       <Button layoutX="541.0" layoutY="391.0" mnemonicParsing="false" onAction="#clear" prefHeight="25.0" prefWidth="96.0" text="CLEAR" />
+      <TextField fx:id="filterField" layoutX="64.0" layoutY="16.0" prefHeight="25.0" prefWidth="193.0" />
+      <Label layoutX="14.0" layoutY="20.0" text="SEARCH" textFill="#ffd400" />
    </children>
 </AnchorPane>
