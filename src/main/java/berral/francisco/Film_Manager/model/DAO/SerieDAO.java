@@ -14,7 +14,7 @@ public class SerieDAO extends ProductionDAO<Serie> {
 	public boolean insert(Serie s) {
 		boolean result = false;
 		myConnection = Connect.getConnect();
-		String query = "INSERT INTO Production VALUES (?,?,?,?,?,?,?,?)";
+		String query = "INSERT INTO Production (ID_F, Title, Type, Duration, Year, Rating, Episodes, Seasons) VALUES (?,?,?,?,?,?,?,?)";
 		
 		try {
 			PreparedStatement sentence = myConnection.prepareStatement(query);
@@ -47,9 +47,9 @@ public class SerieDAO extends ProductionDAO<Serie> {
 			sentence.setInt(3, s.getDuration());
 			sentence.setInt(4, s.getYear());
 			sentence.setString(5, s.getRating());
-			sentence.setInt(6, s.getID_F());
-			sentence.setInt(7, s.getEpisodes());
-			sentence.setInt(8, s.getSeasons());
+			sentence.setInt(6, s.getEpisodes());
+			sentence.setInt(7, s.getSeasons());
+			sentence.setInt(8, s.getID_F());
 			sentence.executeUpdate();
 			result=true;
 		}catch(SQLException e) {

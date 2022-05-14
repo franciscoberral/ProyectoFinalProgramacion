@@ -10,6 +10,7 @@ import berral.francisco.Film_Manager.model.DAO.ProductionDAO;
 import berral.francisco.Film_Manager.model.DAO.SerieDAO;
 import berral.francisco.Film_Manager.model.DataObject.Production;
 import berral.francisco.Film_Manager.model.DataObject.Serie;
+import berral.francisco.Film_Manager.utils.Message;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -96,89 +97,133 @@ public class Serie_Menu_Controller implements Initializable {
 		Duration.clear();
 		Year.clear();
 		Rating.clear();
-	}
-	
-	@FXML
-	private void addSerie() {
-		Integer id = Integer.parseInt(ID.getText());
-		String title = Title.getText();
-		String type = Type.getText();
-		Integer duration = Integer.parseInt(Duration.getText());
-		Integer year = Integer.parseInt(Year.getText());
-		String rating = Rating.getText();
-		Integer episodes = Integer.parseInt(Episodes.getText());
-		Integer seasons = Integer.parseInt(Seasons.getText());
-			
-		Serie s = new Serie(id ,title, type, duration, year, rating, episodes, seasons);
-			
-		sDAO.insert(s);
-		ID.clear();
-		Title.clear();
-		Type.clear();
-		Duration.clear();
-		Year.clear();
-		Rating.clear();
 		Episodes.clear();
 		Seasons.clear();
-		initialize(null, null);
 	}
 	
 	@FXML
-	private void deleteSerie() {
-		Integer id = Integer.parseInt(ID.getText());
-		String title = Title.getText();
-		String type = Type.getText();
-		Integer duration = Integer.parseInt(Duration.getText());
-		Integer year = Integer.parseInt(Year.getText());
-		String rating = Rating.getText();
-		Integer episodes = Integer.parseInt(Episodes.getText());
-		Integer seasons = Integer.parseInt(Seasons.getText());
-		
-		Production p = new Production(id ,title, type, duration, year, rating, episodes, seasons);
-		ProductionDAO.delete(p);
-		ID.clear();
-		Title.clear();
-		Type.clear();
-		Duration.clear();
-		Year.clear();
-		Rating.clear();
-		Episodes.clear();
-		Seasons.clear();
-		initialize(null, null);
-	}
-	
-	@FXML
-	private void modifySerie() {
-		Integer id = Integer.parseInt(ID.getText());
-		String title = Title.getText();
-		String type = Type.getText();
-		Integer duration = Integer.parseInt(Duration.getText());
-		Integer year = Integer.parseInt(Year.getText());
-		String rating = Rating.getText();
-		Integer episodes = Integer.parseInt(Episodes.getText());
-		Integer seasons = Integer.parseInt(Seasons.getText());
-		
-		Production p = ProductionDAO.get(id);
-		if(p != null) {
-			p.setTitle(title);
-			p.setType(type);;
-			p.setDuration(duration);
-			p.setYear(year);;
-			p.setRating(rating);
-			p.setEpisodes(episodes);
-			p.setSeasons(seasons);
+	private void addSerie() throws IOException {
+		try {
+			ID.getText().matches("^[1-9]\\d*$");
+			Duration.getText().matches("^[1-9]\\d*$");
+			Year.getText().matches("^[1-9]\\d*$");
+			Episodes.getText().matches("^[1-9]\\d*$");
+			Seasons.getText().matches("^[1-9]\\d*$");
+			Integer id = Integer.parseInt(ID.getText());
+			String title = Title.getText();
+			String type = Type.getText();
+			Integer duration = Integer.parseInt(Duration.getText());
+			Integer year = Integer.parseInt(Year.getText());
+			String rating = Rating.getText();
+			Integer episodes = Integer.parseInt(Episodes.getText());
+			Integer seasons = Integer.parseInt(Seasons.getText());
 			
-			Serie s = new Serie (id, title, type, duration, year, rating, episodes, seasons);
-			sDAO.update(s);
-			ID.clear();
-			Title.clear();
-			Type.clear();
-			Duration.clear();
-			Year.clear();
-			Rating.clear();
-			Episodes.clear();
-			Seasons.clear();
-			initialize(null, null);
+			Production p = ProductionDAO.get(id);
+			
+			if(p == null) {
+				p = ProductionDAO.get(title);
+				if(p == null) {
+					if(Title.getText() != "") {
+						Serie s = new Serie(id ,title, type, duration, year, rating, episodes, seasons);
+						sDAO.insert(s);
+						ID.clear();
+						Title.clear();
+						Type.clear();
+						Duration.clear();
+						Year.clear();
+						Rating.clear();
+						Episodes.clear();
+						Seasons.clear();
+						initialize(null, null);
+						Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "SERIE HAS BEEN ADDED");
+					}else {
+						Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "TITLE FIELD IS REQUIRED");
+					}
+				}else {
+					Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "THE SERIE TITLE ALREADY EXISTS");
+				}
+			}else {
+				Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "THE PRODUCTION ID ALREADY EXISTS");	
+			}
+		}catch(NumberFormatException e) {
+			Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "THE FIELDS ID, DURATION, YEAR, EPISODES AND SEASONS FROM SERIE MUST BE AN INTEGER");
+		}
+	}
+	
+	@FXML
+	private void deleteSerie() throws IOException {
+		try {
+			ID.getText().matches("^[1-9]\\d*$");
+			Integer id = Integer.parseInt(ID.getText());
+		
+			Production p = ProductionDAO.get(id);
+			
+			if(p != null) {
+				ProductionDAO.delete(p);
+				ID.clear();
+				Title.clear();
+				Type.clear();
+				Duration.clear();
+				Year.clear();
+				Rating.clear();
+				Episodes.clear();
+				Seasons.clear();
+				initialize(null, null);
+				Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "SERIE HAS BEEN DELETED");
+			}else {
+				Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "SERIE NOT FOUND");	
+			}
+		}catch(NumberFormatException e) {
+				Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "THE FIELD SERIE ID MUST BE AN INTEGER");
+		}
+	}
+	
+	@FXML
+	private void modifySerie() throws IOException {
+		try {
+			ID.getText().matches("^[1-9]\\d*$");
+			Duration.getText().matches("^[1-9]\\d*$");
+			Year.getText().matches("^[1-9]\\d*$");
+			Integer id = Integer.parseInt(ID.getText());
+			String title = Title.getText();
+			String type = Type.getText();
+			Integer duration = Integer.parseInt(Duration.getText());
+			Integer year = Integer.parseInt(Year.getText());
+			String rating = Rating.getText();
+			Integer episodes = Integer.parseInt(Episodes.getText());
+			Integer seasons = Integer.parseInt(Seasons.getText());
+			
+			Production p = ProductionDAO.get(id);
+			if(p != null) {
+				if(Title.getText() != "") {
+					p.setTitle(title);
+					p.setType(type);;
+					p.setDuration(duration);
+					p.setYear(year);;
+					p.setRating(rating);
+					p.setEpisodes(episodes);
+					p.setSeasons(seasons);
+					
+					Serie s = new Serie (id, title, type, duration, year, rating, episodes, seasons);
+					sDAO.update(s);
+					ID.clear();
+					Title.clear();
+					Type.clear();
+					Duration.clear();
+					Year.clear();
+					Rating.clear();
+					Episodes.clear();
+					Seasons.clear();
+					initialize(null, null);
+					Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "SERIE HAS BEEN MODIFIED");		
+				}else {
+					Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "TITLE FIELD IS REQUIRED");	
+				}
+			}else {
+				Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "SERIE NOT FOUND");	
+			}
+		}catch(NumberFormatException e) {
+			Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "THE FIELDS ID, DURATION, YEAR, EPISODES AND SEASONS FROM SERIE MUST BE AN INTEGER");	
 		}
 	}
 	

@@ -19,12 +19,12 @@ public abstract class ProductionDAO<T> {
 
 	public static boolean delete(Production p) {
 		boolean result = false;
-		Integer id = p.getID_F();
 		myConnection = Connect.getConnect();
-		String query = "DELETE FROM Production WHERE ID_F = '" +id +"'";
+		String query = "DELETE FROM Production WHERE ID_F=?";
 		
 		try {
 			PreparedStatement sentence = myConnection.prepareStatement(query);
+			sentence.setInt(1, p.getID_F());
 			sentence.executeUpdate();
 			result=true;
 		}catch(SQLException e) {
@@ -43,16 +43,42 @@ public abstract class ProductionDAO<T> {
 			PreparedStatement sentence = myConnection.prepareStatement(query);
 			sentence.setInt(1, id);
 			ResultSet rs = sentence.executeQuery();
-			p = new Production();
-			rs.next();
-			p.setID_F(rs.getInt(1));
-			p.setTitle(rs.getString(2));
-			p.setType(rs.getString(3));
-			p.setDuration(rs.getInt(4));
-			p.setYear(rs.getInt(5));
-			p.setRating(rs.getString(6));
-			p.setEpisodes(rs.getInt(7));
-			p.setSeasons(rs.getInt(8));
+			if(rs.next()) {
+				p = new Production();
+				p.setID_F(rs.getInt(1));
+				p.setTitle(rs.getString(2));
+				p.setType(rs.getString(3));
+				p.setDuration(rs.getInt(4));
+				p.setYear(rs.getInt(5));
+				p.setRating(rs.getString(6));
+				p.setEpisodes(rs.getInt(7));
+				p.setSeasons(rs.getInt(8));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return p;
+	}
+	
+	public static Production get(String title) {
+		Production p = null;
+		myConnection = Connect.getConnect();
+		String query = "SELECT ID_F, Title, Type, Duration, Year, Rating, Episodes, Seasons FROM Production WHERE Title=?";
+		try {
+			PreparedStatement sentence = myConnection.prepareStatement(query);
+			sentence.setString(1, title);
+			ResultSet rs = sentence.executeQuery();
+			if(rs.next()) {
+				p = new Production();
+				p.setID_F(rs.getInt(1));
+				p.setTitle(rs.getString(2));
+				p.setType(rs.getString(3));
+				p.setDuration(rs.getInt(4));
+				p.setYear(rs.getInt(5));
+				p.setRating(rs.getString(6));
+				p.setEpisodes(rs.getInt(7));
+				p.setSeasons(rs.getInt(8));
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

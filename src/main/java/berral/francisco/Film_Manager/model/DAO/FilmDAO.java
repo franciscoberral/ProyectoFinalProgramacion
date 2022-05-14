@@ -14,7 +14,7 @@ public class FilmDAO extends ProductionDAO<Film>{
 	public boolean insert(Film f) {
 		boolean result = false;
 		myConnection = Connect.getConnect();
-		String query = "INSERT INTO Production VALUES (?,?,?,?,?,?,'0','0')";
+		String query = "INSERT INTO Production (ID_F, Title, Type, Duration, Year, Rating, Episodes, Seasons) VALUES (?,?,?,?,?,?,'0','0')";
 		
 		try {
 			PreparedStatement sentence = myConnection.prepareStatement(query);

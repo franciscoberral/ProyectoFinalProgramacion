@@ -9,6 +9,7 @@ import java.util.function.Predicate;
 
 import berral.francisco.Film_Manager.model.DAO.CinemaDAO;
 import berral.francisco.Film_Manager.model.DataObject.Cinema;
+import berral.francisco.Film_Manager.utils.Message;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -85,71 +86,112 @@ public class Cinema_Menu_Controller implements Initializable{
 	}
 	
 	@FXML
-	private void addCinema() {
-		Integer id = Integer.parseInt(ID.getText());
-		String name = Name.getText();
-		String address = Address.getText();
-		String location = Location.getText();
-		Integer rooms = Integer.parseInt(Rooms.getText());
-		Integer capacity = Integer.parseInt(Capacity.getText());
+	private void addCinema() throws IOException {
+		try {
+			ID.getText().matches("^[1-9]\\d*$");
+			Rooms.getText().matches("^[1-9]\\d*$");
+			Capacity.getText().matches("^[1-9]\\d*$");
+			Integer id = Integer.parseInt(ID.getText());
+			String name = Name.getText();
+			String address = Address.getText();
+			String location = Location.getText();
+			Integer rooms = Integer.parseInt(Rooms.getText());
+			Integer capacity = Integer.parseInt(Capacity.getText());
+				
+			Cinema c = cDAO.get(id);
 		
-		Cinema c = new Cinema(id, name, address, location, rooms, capacity);
-		
-		cDAO.insert(c);
-		ID.clear();
-		Name.clear();
-		Address.clear();
-		Location.clear();
-		Rooms.clear();
-		Capacity.clear();
-		initialize(null, null);
+			if(c == null) {
+				c = cDAO.get(name);
+				if(c == null) {
+					if(Name.getText() != "") {
+						Cinema newC = new Cinema(id, name, address, location, rooms, capacity);
+						cDAO.insert(newC);
+						ID.clear();
+						Name.clear();
+						Address.clear();
+						Location.clear();
+						Rooms.clear();
+						Capacity.clear();
+						initialize(null, null);
+						Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "CINEMA HAS BEEN ADDED");
+					}else {
+						Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "NAME FIELD IS REQUIRED");
+					}
+				}else {
+					Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "THE CINEMA NAME ALREADY EXISTS");
+				}
+			}else {
+				Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "THE CINEMA ID ALREADY EXISTS");	
+			}
+		}catch(NumberFormatException e) {
+			Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "THE FIELDS ID, ROOMS AND CAPACITY FROM CINEMA MUST BE AN INTEGER");
+		}
 	}
 	
 	@FXML
 	private void deleteCinema() throws IOException {
-		Integer id = Integer.parseInt(ID.getText());
-		String name = Name.getText();
-		String address = Address.getText();
-		String location = Location.getText();
-		Integer rooms = Integer.parseInt(Rooms.getText());
-		Integer capacity = Integer.parseInt(Capacity.getText());
+		try {
+			ID.getText().matches("^[1-9]\\d*$");
+			Integer id = Integer.parseInt(ID.getText());
 		
-		Cinema c = new Cinema(id, name, address, location, rooms, capacity);
-		
-		cDAO.delete(c);
-		ID.clear();
-		Name.clear();
-		Address.clear();
-		Location.clear();
-		Rooms.clear();
-		Capacity.clear();
-		initialize(null, null);
+			Cinema c = cDAO.get(id);
+	
+			if(c != null) {
+				cDAO.delete(c);
+				ID.clear();
+				Name.clear();
+				Address.clear();
+				Location.clear();
+				Rooms.clear();
+				Capacity.clear();
+				initialize(null, null);
+				Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "CINEMA HAS BEEN DELETED");
+			}else {
+				Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "CINEMA NOT FOUND");	
+			}
+		}catch(NumberFormatException e) {
+			Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "THE FIELD CINEMA ID MUST BE AN INTEGER");	
+		}
 	}
 	
 	@FXML
-	private void modifyCinema() {
-		Integer id = Integer.parseInt(ID.getText());
-		String name = Name.getText();
-		String address = Address.getText();
-		String location = Location.getText();
-		Integer rooms = Integer.parseInt(Rooms.getText());
-		Integer capacity = Integer.parseInt(Capacity.getText());
-		
-		Cinema c = cDAO.get(id);
-		if(c != null) {
-			c.setName(name);
-			c.setAddress(address);
-			c.setLocation(location);
-			c.setRooms(rooms);
-			c.setCapacity(capacity);
-			cDAO.update(c);
-			ID.clear();
-			Name.clear();
-			Address.clear();
-			Location.clear();
-			Rooms.clear();
-			Capacity.clear();
-			initialize(null, null);
+	private void modifyCinema() throws IOException {
+		try {
+			ID.getText().matches("^[1-9]\\d*$");
+			Rooms.getText().matches("^[1-9]\\d*$");
+			Capacity.getText().matches("^[1-9]\\d*$");
+			Integer id = Integer.parseInt(ID.getText());
+			String name = Name.getText();
+			String address = Address.getText();
+			String location = Location.getText();
+			Integer rooms = Integer.parseInt(Rooms.getText());
+			Integer capacity = Integer.parseInt(Capacity.getText());
+			
+			Cinema c = cDAO.get(id);
+			if(c != null) {
+				if(Name.getText() != "") {
+					c.setName(name);
+					c.setAddress(address);
+					c.setLocation(location);
+					c.setRooms(rooms);
+					c.setCapacity(capacity);
+					cDAO.update(c);
+					ID.clear();
+					Name.clear();
+					Address.clear();
+					Location.clear();
+					Rooms.clear();
+					Capacity.clear();
+					initialize(null, null);
+					Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "CINEMA HAS BEEN MODIFIED");
+				}else {
+					Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "NAME FIELD IS REQUIRED");	
+				}
+			}else {
+				Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "CINEMA NOT FOUND");	
+			}
+		}catch(NumberFormatException e) {
+			Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "THE FIELDS ID, ROOMS AND CAPACITY FROM CINEMA MUST BE AN INTEGER");	
 		}
 	}
 	

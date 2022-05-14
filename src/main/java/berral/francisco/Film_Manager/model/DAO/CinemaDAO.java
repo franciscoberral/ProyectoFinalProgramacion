@@ -8,17 +8,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import berral.francisco.Film_Manager.interfaces.ICinemaDAO;
 import berral.francisco.Film_Manager.model.DataObject.Cinema;
 import berral.francisco.Film_Manager.utils.Connect;
 
-public class CinemaDAO implements ICinemaDAO{
+public class CinemaDAO {
 	Connection myConnection = null;
 
 	public boolean insert(Cinema c) {
 		boolean result = false;
 		myConnection = Connect.getConnect();
-		String query = "INSERT INTO Cinema VALUES (?,?,?,?,?,?)";
+		String query = "INSERT INTO Cinema (ID_C, Name, Address, Location, Rooms, Capacity) VALUES (?,?,?,?,?,?)";
 
 		try {
 			PreparedStatement sentence = myConnection.prepareStatement(query);
@@ -38,12 +37,12 @@ public class CinemaDAO implements ICinemaDAO{
 
 	public boolean delete(Cinema c) {
 		boolean result = false;
-		Integer id = c.getID_C();
 		myConnection = Connect.getConnect();
-		String query = "DELETE FROM Cinema WHERE ID_C = '" +id+ "'";
+		String query = "DELETE FROM Cinema WHERE ID_C=?";
 		
 		try {
 			PreparedStatement sentence = myConnection.prepareStatement(query);
+			sentence.setInt(1, c.getID_C());
 			sentence.executeUpdate();
 			result=true;
 		}catch(SQLException e) {
@@ -81,14 +80,38 @@ public class CinemaDAO implements ICinemaDAO{
 			PreparedStatement sentence = myConnection.prepareStatement(query);
 			sentence.setInt(1, id);
 			ResultSet rs = sentence.executeQuery();
-			c = new Cinema();
-			rs.next();
-			c.setID_C(rs.getInt(1));
-			c.setName(rs.getString(2));
-			c.setAddress(rs.getString(3));
-			c.setLocation(rs.getString(4));
-			c.setRooms(rs.getInt(5));
-			c.setCapacity(rs.getInt(6));
+			if(rs.next()) {
+				c = new Cinema();
+				c.setID_C(rs.getInt(1));
+				c.setName(rs.getString(2));
+				c.setAddress(rs.getString(3));
+				c.setLocation(rs.getString(4));
+				c.setRooms(rs.getInt(5));
+				c.setCapacity(rs.getInt(6));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return c;
+	}
+	
+	public Cinema get(String name) {
+		Cinema c = null;
+		myConnection = Connect.getConnect();
+		String query = "SELECT ID_C, Name, Address, Location, Rooms, Capacity FROM Cinema WHERE Name=?";
+		try {
+			PreparedStatement sentence = myConnection.prepareStatement(query);
+			sentence.setString(1, name);
+			ResultSet rs = sentence.executeQuery();
+			if(rs.next()) {
+				c = new Cinema();
+				c.setID_C(rs.getInt(1));
+				c.setName(rs.getString(2));
+				c.setAddress(rs.getString(3));
+				c.setLocation(rs.getString(4));
+				c.setRooms(rs.getInt(5));
+				c.setCapacity(rs.getInt(6));
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

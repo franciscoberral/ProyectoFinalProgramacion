@@ -10,6 +10,7 @@ import berral.francisco.Film_Manager.model.DAO.FilmDAO;
 import berral.francisco.Film_Manager.model.DAO.ProductionDAO;
 import berral.francisco.Film_Manager.model.DataObject.Film;
 import berral.francisco.Film_Manager.model.DataObject.Production;
+import berral.francisco.Film_Manager.utils.Message;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -87,72 +88,114 @@ public class Film_Menu_Controller implements Initializable {
 	}
 	
 	@FXML
-	private void addFilm() {
-		Integer id = Integer.parseInt(ID.getText());
-		String title = Title.getText();
-		String type = Type.getText();
-		Integer duration = Integer.parseInt(Duration.getText());
-		Integer year = Integer.parseInt(Year.getText());
-		String rating = Rating.getText();
+	private void addFilm() throws IOException {
+		try {
+			ID.getText().matches("^[1-9]\\d*$");
+			Duration.getText().matches("^[1-9]\\d*$");
+			Year.getText().matches("^[1-9]\\d*$");
+			Integer id = Integer.parseInt(ID.getText());
+			String title = Title.getText();
+			String type = Type.getText();
+			Integer duration = Integer.parseInt(Duration.getText());
+			Integer year = Integer.parseInt(Year.getText());
+			String rating = Rating.getText();
+				
+			Production p = ProductionDAO.get(id);
 			
-		Film f = new Film(id ,title, type, duration, year, rating);
-			
-		fDAO.insert(f);
-		ID.clear();
-		Title.clear();
-		Type.clear();
-		Duration.clear();
-		Year.clear();
-		Rating.clear();
-		initialize(null, null);
+			if(p == null) {
+				p = ProductionDAO.get(title);
+				if(p == null) {
+					if(Title.getText() != "") {
+						Film newF = new Film(id, title, type, duration, year, rating);
+						fDAO.insert(newF);
+						ID.clear();
+						Title.clear();
+						Type.clear();
+						Duration.clear();
+						Year.clear();
+						Rating.clear();
+						initialize(null, null);
+						Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "FILM HAS BEEN ADDED");
+					}else {
+						Message.error("ERROR", "ERROR WHEN ENTERING FILM", "TITLE FIELD IS REQUIRED");
+					}
+				}else {
+					Message.error("ERROR", "ERROR WHEN ENTERING FILM", "THE FILM TITLE ALREADY EXISTS");
+				}
+			}else {
+				Message.error("ERROR", "ERROR WHEN ENTERING FILM", "THE PRODUCTION ID ALREADY EXISTS");	
+			}
+		}catch(NumberFormatException e) {
+			Message.error("ERROR", "ERROR WHEN ENTERING FILM", "THE FIELDS ID, DURATION AND YEAR FROM FILM MUST BE AN INTEGER");
+		}
 	}
 	
 	@FXML
-	private void deleteFilm() {
-		Integer id = Integer.parseInt(ID.getText());
-		String title = Title.getText();
-		String type = Type.getText();
-		Integer duration = Integer.parseInt(Duration.getText());
-		Integer year = Integer.parseInt(Year.getText());
-		String rating = Rating.getText();
+	private void deleteFilm() throws IOException {
+		try {
+			ID.getText().matches("^[1-9]\\d*$");
+			Integer id = Integer.parseInt(ID.getText());
 		
-		Production p = new Production(id ,title, type, duration, year, rating);
-		ProductionDAO.delete(p);
-		ID.clear();
-		Title.clear();
-		Type.clear();
-		Duration.clear();
-		Year.clear();
-		Rating.clear();
-		initialize(null, null);
+			Production p = ProductionDAO.get(id);
+			
+			if(p != null) {
+				ProductionDAO.delete(p);
+				ID.clear();
+				Title.clear();
+				Type.clear();
+				Duration.clear();
+				Year.clear();
+				Rating.clear();
+				initialize(null, null);
+				Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "FILM HAS BEEN DELETED");
+			}else {
+				Message.error("ERROR", "ERROR WHEN ENTERING FILM", "FILM NOT FOUND");	
+			}
+		}catch(NumberFormatException e) {
+				Message.error("ERROR", "ERROR WHEN ENTERING FILM", "THE FIELD FILM ID MUST BE AN INTEGER");
+		}
 	}
 	
 	@FXML
-	private void modifyFilm() {
-		Integer id = Integer.parseInt(ID.getText());
-		String title = Title.getText();
-		String type = Type.getText();
-		Integer duration = Integer.parseInt(Duration.getText());
-		Integer year = Integer.parseInt(Year.getText());
-		String rating = Rating.getText();
-		
-		Production p = ProductionDAO.get(id);
-		if(p != null) {
-			p.setTitle(title);
-			p.setType(type);;
-			p.setDuration(duration);
-			p.setYear(year);;
-			p.setRating(rating);
+	private void modifyFilm() throws IOException {
+		try {
+			ID.getText().matches("^[1-9]\\d*$");
+			Duration.getText().matches("^[1-9]\\d*$");
+			Year.getText().matches("^[1-9]\\d*$");
+			Integer id = Integer.parseInt(ID.getText());
+			String title = Title.getText();
+			String type = Type.getText();
+			Integer duration = Integer.parseInt(Duration.getText());
+			Integer year = Integer.parseInt(Year.getText());
+			String rating = Rating.getText();
 			
-			Film f = new Film (id, title, type, duration, year, rating);
-			fDAO.update(f);
-			ID.clear();
-			Title.clear();
-			Type.clear();
-			Duration.clear();
-			Year.clear();
-			Rating.clear();
-			initialize(null, null);
+			Production p = ProductionDAO.get(id);
+			if(p != null) {
+				if(Title.getText() != "") {
+					p.setTitle(title);
+					p.setType(type);;
+					p.setDuration(duration);
+					p.setYear(year);;
+					p.setRating(rating);
+						
+					Film f = new Film (id, title, type, duration, year, rating);
+					fDAO.update(f);
+					ID.clear();
+					Title.clear();
+					Type.clear();
+					Duration.clear();
+					Year.clear();
+					Rating.clear();
+					initialize(null, null);
+					Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "FILM HAS BEEN MODIFIED");		
+				}else {
+					Message.error("ERROR", "ERROR WHEN ENTERING FILM", "TITLE FIELD IS REQUIRED");	
+				}
+			}else {
+				Message.error("ERROR", "ERROR WHEN ENTERING FILM", "FILM NOT FOUND");	
+			}
+		}catch(NumberFormatException e) {
+			Message.error("ERROR", "ERROR WHEN ENTERING FILM", "THE FIELDS ID, DURATION AND YEAR FROM FILM MUST BE AN INTEGER");	
 		}
 	}
 	

@@ -12,6 +12,7 @@ import berral.francisco.Film_Manager.model.DAO.ProyectionDAO;
 import berral.francisco.Film_Manager.model.DataObject.Cinema;
 import berral.francisco.Film_Manager.model.DataObject.Production;
 import berral.francisco.Film_Manager.model.DataObject.Proyection;
+import berral.francisco.Film_Manager.utils.Message;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -64,17 +65,22 @@ public class Proyection_Menu_Controller implements Initializable{
 	}
 	
 	@FXML
-	private void addProyection() {
+	private void addProyection() throws IOException {
 		Cinema c = comCinema.getSelectionModel().getSelectedItem(); 
 		Production p = comProd.getSelectionModel().getSelectedItem();
 		LocalDate sD = dateStart.getValue();
 		LocalDate fD = dateFinish.getValue();
 		
-		Proyection pr = new Proyection(c, p, sD, fD);
-		pDAO.insert(pr);
-		dateStart.getEditor().clear();
-		dateFinish.getEditor().clear();
-		initialize(null, null);
+		if(comCinema.getSelectionModel().getSelectedItem() != null && comProd.getSelectionModel().getSelectedItem() != null && dateStart.getValue() != null && dateFinish.getValue() != null) {
+			Proyection pr = new Proyection(c, p, sD, fD);
+			pDAO.insert(pr);
+			dateStart.getEditor().clear();
+			dateFinish.getEditor().clear();
+			initialize(null, null);
+			Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "PROYECTION HAS BEEN ADDED");
+		}else {
+			Message.error("ERROR", "ERROR WHEN ENTERING PROYECTION", "ALL FIELDS ARE REQUIRED");
+		}
 	}
 	
 	@FXML
@@ -82,32 +88,41 @@ public class Proyection_Menu_Controller implements Initializable{
 		Cinema c = comCinema.getSelectionModel().getSelectedItem(); 
 		Production p = comProd.getSelectionModel().getSelectedItem();
 		LocalDate sD = dateStart.getValue();
-		LocalDate fD = dateFinish.getValue();
 		
-		Proyection pr = new Proyection(c, p, sD, fD);
-		pDAO.delete(pr);
-		dateStart.getEditor().clear();
-		dateFinish.getEditor().clear();
-		initialize(null, null);
+		if(comCinema.getSelectionModel().getSelectedItem() != null && comProd.getSelectionModel().getSelectedItem() != null && dateStart.getValue() != null) {
+			Proyection pr = pDAO.get(c.getID_C(), p.getID_F(), sD);
+			pDAO.delete(pr);
+			dateStart.getEditor().clear();
+			dateFinish.getEditor().clear();
+			initialize(null, null);
+			Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "PROYECTION HAS BEEN DELETED");
+		}else {
+			Message.error("ERROR", "ERROR WHEN ENTERING PROYECTION", "FIELDS ID_C, ID_F AND STARTDATE FROM PROYECTION ARE REQUIRED");	
+		}
 	}
 
 	@FXML
-	private void modifyProyection() {
+	private void modifyProyection() throws IOException {
 		Cinema c = comCinema.getSelectionModel().getSelectedItem(); 
 		Production p = comProd.getSelectionModel().getSelectedItem();
 		LocalDate sD = dateStart.getValue();
 		LocalDate fD = dateFinish.getValue();
 		
-		Proyection pr = pDAO.get(c.getID_C(), p.getID_F());
-		if(pr != null) {
-			pr.setC(c);
-			pr.setP(p);
-			pr.setStartDate(sD);
-			pr.setFinishDate(fD);
-			pDAO.update(pr);
-			dateStart.getEditor().clear();
-			dateFinish.getEditor().clear();
-			initialize(null, null);
+		if(comCinema.getSelectionModel().getSelectedItem() != null && comProd.getSelectionModel().getSelectedItem() != null && dateStart.getValue() != null) {
+			Proyection pr = pDAO.get(c.getID_C(), p.getID_F(), sD);
+			if(pr != null) {
+				pr.setC(c);
+				pr.setP(p);
+				pr.setStartDate(sD);
+				pr.setFinishDate(fD);
+				pDAO.update(pr);
+				dateStart.getEditor().clear();
+				dateFinish.getEditor().clear();
+				initialize(null, null);
+				Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "PROYECTION HAS BEEN MODIFIED");
+			}
+		}else {
+			Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "FIELDS ID_C, ID_F AND STARTDATE FROM PROYECTION ARE REQUIRED");	
 		}
 	}
 
@@ -146,6 +161,5 @@ public class Proyection_Menu_Controller implements Initializable{
 		});
 		
 		proyectionTable.setItems(FXCollections.observableArrayList(obsPro));
-		System.out.println(obsPro);
 	}
 }
