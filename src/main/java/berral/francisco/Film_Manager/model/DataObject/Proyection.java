@@ -2,24 +2,19 @@ package berral.francisco.Film_Manager.model.DataObject;
 
 import java.time.LocalDate;
 
-import berral.francisco.Film_Manager.interfaces.IProyection;
-
-public class Proyection implements IProyection {
+public class Proyection{
 	private Cinema c;
-	private Film f;
+	private Production p;
 	private LocalDate StartDate;
 	private LocalDate FinishDate;
 	
 	public Proyection() {
-		this.c = null;
-		this.f = null;
-		this.StartDate = null;
-		this.FinishDate = null;
+		
 	}
 	
-	public Proyection(Cinema c, Film f, LocalDate startDate, LocalDate finishDate) {
+	public Proyection(Cinema c, Production p, LocalDate startDate, LocalDate finishDate) {
 		this.c = c;
-		this.f = f;
+		this.p = p;
 		this.StartDate = startDate;
 		this.FinishDate = finishDate;
 	}
@@ -32,12 +27,12 @@ public class Proyection implements IProyection {
 		this.c = c;
 	}
 
-	public Film getF() {
-		return f;
+	public Production getP() {
+		return p;
 	}
 
-	public void setF(Film f) {
-		this.f = f;
+	public void setP(Production p) {
+		this.p = p;
 	}
 
 	public LocalDate getStartDate() {
@@ -58,7 +53,6 @@ public class Proyection implements IProyection {
 
 	@Override
 	public String toString() {
-		return "Proyection [c=" + c + ", f=" + f + ", StartDate=" + StartDate + ", FinishDate=" + FinishDate + "]";
+		return "Proyection [c=" + c + ", p=" + p + ", StartDate=" + StartDate + ", FinishDate=" + FinishDate + "]";
 	}
-	
 }

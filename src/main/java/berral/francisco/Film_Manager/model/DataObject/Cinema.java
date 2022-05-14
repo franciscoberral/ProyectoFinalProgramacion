@@ -1,8 +1,6 @@
 package berral.francisco.Film_Manager.model.DataObject;
 
-import berral.francisco.Film_Manager.interfaces.ICinema;
-
-public class Cinema implements ICinema {
+public class Cinema {
 	private Integer ID_C;
 	private String Name;
 	private String Address;
@@ -11,12 +9,7 @@ public class Cinema implements ICinema {
 	private Integer Capacity;
 	
 	public Cinema() {
-		this.ID_C = null;
-		this.Name = "";
-		this.Address = "";
-		this.Location = "";
-		this.Rooms = null;
-		this.Capacity = null;
+	
 	}
 
 	public Cinema(Integer iD_C, String name, String address, String location, Integer rooms, Integer capacity) {
@@ -78,7 +71,6 @@ public class Cinema implements ICinema {
 
 	@Override
 	public String toString() {
-		return "Cinema [ID_C=" + ID_C + ", Name=" + Name + ", Address=" + Address + ", Location=" + Location
-				+ ", Rooms=" + Rooms + ", Capacity=" + Capacity + "]";
+		return Name;
 	}
 }

@@ -43,13 +43,15 @@
                <children>
                   <Label layoutX="8.0" layoutY="1.0" text="CINEMA" />
                   <Label layoutX="8.0" layoutY="45.0" text="FILM" />
-                  <Button layoutX="8.0" layoutY="280.0" mnemonicParsing="false" onAction="#addProyection" prefHeight="25.0" prefWidth="149.0" text="ADD" />
+                  <Button layoutX="8.0" layoutY="280.0" mnemonicParsing="false" onAction="#modifyProyection" prefHeight="25.0" prefWidth="149.0" text="UPDATE" />
                   <ComboBox fx:id="comCinema" layoutX="8.0" layoutY="19.0" prefHeight="25.0" prefWidth="149.0" />
-                  <ComboBox fx:id="comFilm" layoutX="8.0" layoutY="63.0" prefHeight="25.0" prefWidth="149.0" />
+                  <ComboBox fx:id="comProd" layoutX="8.0" layoutY="63.0" prefHeight="25.0" prefWidth="149.0" />
                   <DatePicker fx:id="dateStart" layoutX="8.0" layoutY="107.0" prefHeight="25.0" prefWidth="149.0" />
                   <DatePicker fx:id="dateFinish" layoutX="8.0" layoutY="151.0" prefHeight="25.0" prefWidth="149.0" />
                   <Label layoutX="8.0" layoutY="89.0" text="START DATE" />
                   <Label layoutX="8.0" layoutY="133.0" text="FINISH DATE" />
+                  <Button layoutX="8.0" layoutY="221.0" mnemonicParsing="false" onAction="#addProyection" prefHeight="25.0" prefWidth="149.0" text="ADD" />
+                  <Button layoutX="8.0" layoutY="250.0" mnemonicParsing="false" onAction="#deleteProyection" prefHeight="25.0" prefWidth="149.0" text="DELETE" />
                </children>
             </AnchorPane>
         </items>

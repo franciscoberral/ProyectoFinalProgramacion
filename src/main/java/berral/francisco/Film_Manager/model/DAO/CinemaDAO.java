@@ -11,8 +11,6 @@ import java.util.List;
 import berral.francisco.Film_Manager.interfaces.ICinemaDAO;
 import berral.francisco.Film_Manager.model.DataObject.Cinema;
 import berral.francisco.Film_Manager.utils.Connect;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class CinemaDAO implements ICinemaDAO{
 	Connection myConnection = null;
@@ -20,7 +18,7 @@ public class CinemaDAO implements ICinemaDAO{
 	public boolean insert(Cinema c) {
 		boolean result = false;
 		myConnection = Connect.getConnect();
-		String query = "INSERT INTO Cinema (ID_C, Name, Address, Location, Rooms, Capacity) VALUES (?,?,?,?,?,?)";
+		String query = "INSERT INTO Cinema VALUES (?,?,?,?,?,?)";
 
 		try {
 			PreparedStatement sentence = myConnection.prepareStatement(query);
@@ -120,30 +118,5 @@ public class CinemaDAO implements ICinemaDAO{
 			e.printStackTrace();
 		}
 		return list;
-	}
-	
-	public ObservableList<Cinema> getCinemas() {
-		ObservableList<Cinema> obs = FXCollections.observableArrayList();
-		myConnection = Connect.getConnect();
-		String query = "SELECT ID_C, Name, Address, Location, Rooms, Capacity FROM Cinema";
-		
-		try {
-			Statement st = myConnection.createStatement();
-			ResultSet rs = st.executeQuery(query);
-			Cinema aux = null;
-			while(rs.next()) {
-				aux = new Cinema();
-				aux.setID_C(rs.getInt(1));
-				aux.setName(rs.getString(2));
-				aux.setAddress(rs.getString(3));
-				aux.setLocation(rs.getString(4));
-				aux.setRooms(rs.getInt(5));
-				aux.setCapacity(rs.getInt(6));
-				obs.add(aux);
-			}
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return obs;
 	}
 }

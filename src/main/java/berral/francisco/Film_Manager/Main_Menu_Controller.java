@@ -14,6 +14,11 @@ public class Main_Menu_Controller {
 	private void switchToFilms() throws IOException {
 		App.setRoot("film_menu_view");
 	}
+	
+	@FXML
+	private void switchToSeries() throws IOException {
+		App.setRoot("serie_menu_view");
+	}
 
 	@FXML
 	private void switchToProyections() throws IOException {

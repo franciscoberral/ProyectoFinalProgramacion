@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
-import berral.francisco.Film_Manager.model.DAO.FilmDAO;
 import berral.francisco.Film_Manager.model.DAO.ProductionDAO;
-import berral.francisco.Film_Manager.model.DataObject.Film;
+import berral.francisco.Film_Manager.model.DAO.SerieDAO;
 import berral.francisco.Film_Manager.model.DataObject.Production;
+import berral.francisco.Film_Manager.model.DataObject.Serie;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -25,9 +25,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-public class Film_Menu_Controller implements Initializable {
+public class Serie_Menu_Controller implements Initializable {
 	
-	FilmDAO fDAO = new FilmDAO();
+	SerieDAO sDAO = new SerieDAO();
 	
 	@FXML
 	private TextField ID;
@@ -47,11 +47,17 @@ public class Film_Menu_Controller implements Initializable {
 	@FXML
 	private TextField Rating;
 	
+	@FXML 
+	private TextField Episodes;
+	
+	@FXML
+	private TextField Seasons;
+	
 	@FXML
 	private TextField filterField;
 	
 	@FXML
-	private TableView<Production> filmTable;
+	private TableView<Production> serieTable;
 	
 	@FXML
 	private TableColumn<Production, Integer> idCol;
@@ -72,6 +78,12 @@ public class Film_Menu_Controller implements Initializable {
 	private TableColumn<Production, String> ratingCol;
 	
 	@FXML
+	private TableColumn<Production, Integer> episodesCol;
+	
+	@FXML
+	private TableColumn<Production, Integer> seasonsCol;
+	
+	@FXML
 	private void switchToMain() throws IOException {
 		App.setRoot("main_menu_view");
 	}
@@ -87,36 +99,42 @@ public class Film_Menu_Controller implements Initializable {
 	}
 	
 	@FXML
-	private void addFilm() {
+	private void addSerie() {
 		Integer id = Integer.parseInt(ID.getText());
 		String title = Title.getText();
 		String type = Type.getText();
 		Integer duration = Integer.parseInt(Duration.getText());
 		Integer year = Integer.parseInt(Year.getText());
 		String rating = Rating.getText();
+		Integer episodes = Integer.parseInt(Episodes.getText());
+		Integer seasons = Integer.parseInt(Seasons.getText());
 			
-		Film f = new Film(id ,title, type, duration, year, rating);
+		Serie s = new Serie(id ,title, type, duration, year, rating, episodes, seasons);
 			
-		fDAO.insert(f);
+		sDAO.insert(s);
 		ID.clear();
 		Title.clear();
 		Type.clear();
 		Duration.clear();
 		Year.clear();
 		Rating.clear();
+		Episodes.clear();
+		Seasons.clear();
 		initialize(null, null);
 	}
 	
 	@FXML
-	private void deleteFilm() {
+	private void deleteSerie() {
 		Integer id = Integer.parseInt(ID.getText());
 		String title = Title.getText();
 		String type = Type.getText();
 		Integer duration = Integer.parseInt(Duration.getText());
 		Integer year = Integer.parseInt(Year.getText());
 		String rating = Rating.getText();
+		Integer episodes = Integer.parseInt(Episodes.getText());
+		Integer seasons = Integer.parseInt(Seasons.getText());
 		
-		Production p = new Production(id ,title, type, duration, year, rating);
+		Production p = new Production(id ,title, type, duration, year, rating, episodes, seasons);
 		ProductionDAO.delete(p);
 		ID.clear();
 		Title.clear();
@@ -124,17 +142,21 @@ public class Film_Menu_Controller implements Initializable {
 		Duration.clear();
 		Year.clear();
 		Rating.clear();
+		Episodes.clear();
+		Seasons.clear();
 		initialize(null, null);
 	}
 	
 	@FXML
-	private void modifyFilm() {
+	private void modifySerie() {
 		Integer id = Integer.parseInt(ID.getText());
 		String title = Title.getText();
 		String type = Type.getText();
 		Integer duration = Integer.parseInt(Duration.getText());
 		Integer year = Integer.parseInt(Year.getText());
 		String rating = Rating.getText();
+		Integer episodes = Integer.parseInt(Episodes.getText());
+		Integer seasons = Integer.parseInt(Seasons.getText());
 		
 		Production p = ProductionDAO.get(id);
 		if(p != null) {
@@ -143,35 +165,41 @@ public class Film_Menu_Controller implements Initializable {
 			p.setDuration(duration);
 			p.setYear(year);;
 			p.setRating(rating);
+			p.setEpisodes(episodes);
+			p.setSeasons(seasons);
 			
-			Film f = new Film (id, title, type, duration, year, rating);
-			fDAO.update(f);
+			Serie s = new Serie (id, title, type, duration, year, rating, episodes, seasons);
+			sDAO.update(s);
 			ID.clear();
 			Title.clear();
 			Type.clear();
 			Duration.clear();
 			Year.clear();
 			Rating.clear();
+			Episodes.clear();
+			Seasons.clear();
 			initialize(null, null);
 		}
 	}
 	
 	@FXML
 	private void onEdit() {
-		if(filmTable.getSelectionModel().getSelectedItem() != null) {
-			Production selected = filmTable.getSelectionModel().getSelectedItem();
+		if(serieTable.getSelectionModel().getSelectedItem() != null) {
+			Production selected = serieTable.getSelectionModel().getSelectedItem();
 			ID.setText(String.valueOf(selected.getID_F()));
 			Title.setText(selected.getTitle());
 			Type.setText(selected.getType());
 			Duration.setText(String.valueOf(selected.getDuration()));
 			Year.setText(String.valueOf(selected.getYear()));
 			Rating.setText(selected.getRating());
+			Episodes.setText(String.valueOf(selected.getEpisodes()));
+			Seasons.setText(String.valueOf(selected.getSeasons()));
 		}
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		List<Production> list = (List<Production>) ProductionDAO.getAllFilms();
+		List<Production> list = (List<Production>) ProductionDAO.getAllSeries();
 		
 		ObservableList<Production> ob = FXCollections.observableArrayList(list);
 		
@@ -205,8 +233,18 @@ public class Film_Menu_Controller implements Initializable {
 			s.setValue(production.getValue().getRating());
 			return s;
 		});
+		episodesCol.setCellValueFactory(production ->{
+			ObservableValue<Integer> o = new SimpleIntegerProperty().asObject();
+			((ObjectProperty<Integer>) o).setValue(production.getValue().getEpisodes());
+			return o;
+		});
+		seasonsCol.setCellValueFactory(production ->{
+			ObservableValue<Integer> o = new SimpleIntegerProperty().asObject();
+			((ObjectProperty<Integer>) o).setValue(production.getValue().getSeasons());
+			return o;
+		});
 		
-		filmTable.setItems(FXCollections.observableArrayList(list));
+		serieTable.setItems(FXCollections.observableArrayList(list));
 		
 		FilteredList<Production> filList = new FilteredList<>(ob, b -> true);
 		
@@ -223,13 +261,13 @@ public class Film_Menu_Controller implements Initializable {
 				});
 				
 				SortedList<Production> sorList = new SortedList<>(filList);
-				sorList.comparatorProperty().bind(filmTable.comparatorProperty());
+				sorList.comparatorProperty().bind(serieTable.comparatorProperty());
 				
-				filmTable.setItems(sorList);
+				serieTable.setItems(sorList);
 			});
 		});
 		
-		filmTable.setOnMouseClicked((MouseEvent event) -> {
+		serieTable.setOnMouseClicked((MouseEvent event) -> {
 			if (event.getClickCount() > 1) {
 				onEdit();
 			}

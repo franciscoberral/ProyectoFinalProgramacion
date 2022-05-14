@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import berral.francisco.Film_Manager.model.DAO.CinemaDAO;
-import berral.francisco.Film_Manager.model.DAO.FilmDAO;
+import berral.francisco.Film_Manager.model.DAO.ProductionDAO;
 import berral.francisco.Film_Manager.model.DAO.ProyectionDAO;
 import berral.francisco.Film_Manager.model.DataObject.Cinema;
-import berral.francisco.Film_Manager.model.DataObject.Film;
+import berral.francisco.Film_Manager.model.DataObject.Production;
 import berral.francisco.Film_Manager.model.DataObject.Proyection;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -29,15 +29,13 @@ public class Proyection_Menu_Controller implements Initializable{
 	
 	CinemaDAO cDAO = new CinemaDAO();
 	
-	FilmDAO fDAO = new FilmDAO();
-	
 	ProyectionDAO pDAO = new ProyectionDAO();
 	
 	@FXML
 	private ComboBox<Cinema> comCinema;
 	
 	@FXML
-	private ComboBox<Film> comFilm;
+	private ComboBox<Production> comProd;
 	
 	@FXML
 	private DatePicker dateStart;
@@ -68,27 +66,63 @@ public class Proyection_Menu_Controller implements Initializable{
 	@FXML
 	private void addProyection() {
 		Cinema c = comCinema.getSelectionModel().getSelectedItem(); 
-		Film f = comFilm.getSelectionModel().getSelectedItem();
+		Production p = comProd.getSelectionModel().getSelectedItem();
 		LocalDate sD = dateStart.getValue();
 		LocalDate fD = dateFinish.getValue();
 		
-		Proyection p = new Proyection(c, f, sD, fD);
-		pDAO.insert(p);
+		Proyection pr = new Proyection(c, p, sD, fD);
+		pDAO.insert(pr);
+		dateStart.getEditor().clear();
+		dateFinish.getEditor().clear();
 		initialize(null, null);
+	}
+	
+	@FXML
+	private void deleteProyection() throws IOException {
+		Cinema c = comCinema.getSelectionModel().getSelectedItem(); 
+		Production p = comProd.getSelectionModel().getSelectedItem();
+		LocalDate sD = dateStart.getValue();
+		LocalDate fD = dateFinish.getValue();
+		
+		Proyection pr = new Proyection(c, p, sD, fD);
+		pDAO.delete(pr);
+		dateStart.getEditor().clear();
+		dateFinish.getEditor().clear();
+		initialize(null, null);
+	}
+
+	@FXML
+	private void modifyProyection() {
+		Cinema c = comCinema.getSelectionModel().getSelectedItem(); 
+		Production p = comProd.getSelectionModel().getSelectedItem();
+		LocalDate sD = dateStart.getValue();
+		LocalDate fD = dateFinish.getValue();
+		
+		Proyection pr = pDAO.get(c.getID_C(), p.getID_F());
+		if(pr != null) {
+			pr.setC(c);
+			pr.setP(p);
+			pr.setStartDate(sD);
+			pr.setFinishDate(fD);
+			pDAO.update(pr);
+			dateStart.getEditor().clear();
+			dateFinish.getEditor().clear();
+			initialize(null, null);
+		}
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		ObservableList<Cinema> obsCinema = cDAO.getCinemas();
+		List<Cinema> cinemaList = (List<Cinema>) cDAO.getAll();
+		ObservableList<Cinema> obsCinema = FXCollections.observableArrayList(cinemaList);
 		comCinema.setItems(obsCinema);
 		
-		FilmDAO fDAO = new FilmDAO();
-		ObservableList<Film> obsFilm = fDAO.getFilms();
-		comFilm.setItems(obsFilm);
+		List<Production> productionList = (List<Production>) ProductionDAO.getAllFilms();
+		ObservableList<Production> obsProd = FXCollections.observableArrayList(productionList);
+		comProd.setItems(obsProd);
 		
-		List<Proyection> list = (List<Proyection>) pDAO.getAll();
-		
-		ObservableList<Proyection> obsPro = FXCollections.observableArrayList(list);
+		List<Proyection> proyectionList = (List<Proyection>) pDAO.getAll();
+		ObservableList<Proyection> obsPro = FXCollections.observableArrayList(proyectionList);
 
 		nameCol.setCellValueFactory(proyection ->{
 			SimpleStringProperty s = new SimpleStringProperty();
@@ -97,7 +131,7 @@ public class Proyection_Menu_Controller implements Initializable{
 		});
 		titleCol.setCellValueFactory(proyection ->{
 			SimpleStringProperty s = new SimpleStringProperty();
-			s.setValue(proyection.getValue().getF().getTitle());
+			s.setValue(proyection.getValue().getP().getTitle());
 			return s;
 		});
 		startCol.setCellValueFactory(proyection ->{
@@ -105,7 +139,6 @@ public class Proyection_Menu_Controller implements Initializable{
 			((ObjectProperty<LocalDate>) o).setValue(proyection.getValue().getStartDate());
 			return o;
 		});
-		
 		finishCol.setCellValueFactory(proyection ->{
 			ObservableValue<LocalDate> o = new SimpleObjectProperty<LocalDate>();
 			((ObjectProperty<LocalDate>) o).setValue(proyection.getValue().getFinishDate());
@@ -113,5 +146,6 @@ public class Proyection_Menu_Controller implements Initializable{
 		});
 		
 		proyectionTable.setItems(FXCollections.observableArrayList(obsPro));
+		System.out.println(obsPro);
 	}
 }
