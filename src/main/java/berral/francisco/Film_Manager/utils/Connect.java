@@ -11,11 +11,22 @@ import javax.xml.bind.Unmarshaller;
 
 import berral.francisco.Film_Manager.interfaces.IConnect;
 
+/**
+ * Clase "Conexión" que implementa la interfaz "IConnect"
+ * @author Francisco José Berral Zafra
+ *
+ */
 public class Connect implements IConnect {
 	private static Connection con;
 	private String file = "connection.xml";
+	/**
+	 * Singleton
+	 */
 	private static Connect _newInstance;
 	
+	/**
+	 * Constructor de la conexión
+	 */
 	private Connect() {
 		DataConnection dc = load();
 		
@@ -28,6 +39,10 @@ public class Connect implements IConnect {
 		}
 	}
 	
+	/**
+	 * Método para obtener la conexión (Singleton)
+	 * @return Conexión
+	 */
 	public static Connection getConnect() {
 		if(_newInstance == null) {
 			_newInstance = new Connect();
@@ -35,6 +50,9 @@ public class Connect implements IConnect {
 		return con;
 	}
 	
+	/**
+	 * Metodo para cargar los datos de la conexión
+	 */
 	public DataConnection load() {
 		DataConnection dataCon = new DataConnection();
 		JAXBContext context;

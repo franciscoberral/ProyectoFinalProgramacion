@@ -2,6 +2,11 @@ package berral.francisco.Film_Manager.model.DataObject;
 
 import berral.francisco.Film_Manager.interfaces.ICinema;
 
+/**
+ * Clase "Cine" que implementa la interfaz "ICinema"
+ * @author Francisco José Berral Zafra
+ *
+ */
 public class Cinema implements ICinema {
 	/**
 	 * Atributos del cine
@@ -123,7 +128,7 @@ public class Cinema implements ICinema {
 	}
 
 	/**
-	 * Muestra el cine
+	 * Muestra la información del cine
 	 */
 	@Override
 	public String toString() {

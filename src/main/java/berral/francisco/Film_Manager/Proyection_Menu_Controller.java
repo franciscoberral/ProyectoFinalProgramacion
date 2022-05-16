@@ -71,19 +71,25 @@ public class Proyection_Menu_Controller implements Initializable{
 		LocalDate sD = dateStart.getValue();
 		LocalDate fD = dateFinish.getValue();
 		
-		if(comCinema.getSelectionModel().getSelectedItem() != null && comProd.getSelectionModel().getSelectedItem() != null && dateStart.getValue() != null && dateFinish.getValue() != null) {
-			if(fD.isAfter(sD)) {
-				Proyection pr = new Proyection(c, p, sD, fD);
-				pDAO.insert(pr);
-				dateStart.getEditor().clear();
-				dateFinish.getEditor().clear();
-				initialize(null, null);
-				Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "PROYECTION HAS BEEN ADDED");
+		Proyection pr = pDAO.get(c.getID_C(), p.getID_F(), sD);
+		
+		if(pr == null) {
+			if(comCinema.getSelectionModel().getSelectedItem() != null && comProd.getSelectionModel().getSelectedItem() != null && dateStart.getValue() != null && dateFinish.getValue() != null) {
+				if(fD.isAfter(sD)) {
+					Proyection pro = new Proyection(c, p, sD, fD);
+					pDAO.insert(pro);
+					dateStart.getEditor().clear();
+					dateFinish.getEditor().clear();
+					initialize(null, null);
+					Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "PROYECTION HAS BEEN ADDED");
+				}else {
+					Message.error("ERROR", "ERROR WHEN ENTERING PROYECTION", "THE END DATE MUST BE LATER THAN THE START DATE");
+				}
 			}else {
-				Message.error("ERROR", "ERROR WHEN ENTERING PROYECTION", "THE END DATE MUST BE LATER THAN THE START DATE");
+				Message.error("ERROR", "ERROR WHEN ENTERING PROYECTION", "ALL FIELDS ARE REQUIRED");
 			}
 		}else {
-			Message.error("ERROR", "ERROR WHEN ENTERING PROYECTION", "ALL FIELDS ARE REQUIRED");
+			Message.error("ERROR", "ERROR WHEN ENTERING PROYECTION", "PROYECTION ALREADY EXISTS");
 		}
 	}
 	

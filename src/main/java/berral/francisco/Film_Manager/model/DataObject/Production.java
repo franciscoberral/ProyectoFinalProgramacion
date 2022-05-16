@@ -2,6 +2,12 @@ package berral.francisco.Film_Manager.model.DataObject;
 
 import berral.francisco.Film_Manager.interfaces.IProduction;
 
+/**
+ * Clase "Producción" que implementa la interfaz "IProduction"
+ * @author Francisco José Berral Zafra
+ *
+ */
+
 public class Production implements IProduction {
 	/**
 	 * Atributos de la producción
@@ -175,7 +181,7 @@ public class Production implements IProduction {
 	}
 
 	/**
-	 * Muestra la producción
+	 * Muestra la información de la producción
 	 */
 	@Override
 	public String toString() {

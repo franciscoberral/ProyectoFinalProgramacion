@@ -4,6 +4,11 @@ import java.time.LocalDate;
 
 import berral.francisco.Film_Manager.interfaces.IProyection;
 
+/**
+ * Clase "Proyección" que implementa la interfaz "IProyection"
+ * @author Francisco José Berral Zafra
+ *
+ */
 public class Proyection implements IProyection {
 	/**
 	 * Atributos de la proyección
@@ -91,7 +96,7 @@ public class Proyection implements IProyection {
 	}
 
 	/**
-	 * Muestra la proyección
+	 * Muestra la información de la proyección
 	 */
 	@Override
 	public String toString() {
