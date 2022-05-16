@@ -124,18 +124,22 @@ public class Serie_Menu_Controller implements Initializable {
 				p = ProductionDAO.get(title);
 				if(p == null) {
 					if(Title.getText() != "") {
-						Serie s = new Serie(id ,title, type, duration, year, rating, episodes, seasons);
-						sDAO.insert(s);
-						ID.clear();
-						Title.clear();
-						Type.clear();
-						Duration.clear();
-						Year.clear();
-						Rating.clear();
-						Episodes.clear();
-						Seasons.clear();
-						initialize(null, null);
-						Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "SERIE HAS BEEN ADDED");
+						if(id>0 && duration>0 && year>0 && episodes>0 && seasons>0) {
+							Serie s = new Serie(id ,title, type, duration, year, rating, episodes, seasons);
+							sDAO.insert(s);
+							ID.clear();
+							Title.clear();
+							Type.clear();
+							Duration.clear();
+							Year.clear();
+							Rating.clear();
+							Episodes.clear();
+							Seasons.clear();
+							initialize(null, null);
+							Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "SERIE HAS BEEN ADDED");
+						}else {
+							Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");	
+						}
 					}else {
 						Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "TITLE FIELD IS REQUIRED");
 					}
@@ -196,26 +200,30 @@ public class Serie_Menu_Controller implements Initializable {
 			Production p = ProductionDAO.get(id);
 			if(p != null) {
 				if(Title.getText() != "") {
-					p.setTitle(title);
-					p.setType(type);;
-					p.setDuration(duration);
-					p.setYear(year);;
-					p.setRating(rating);
-					p.setEpisodes(episodes);
-					p.setSeasons(seasons);
-					
-					Serie s = new Serie (id, title, type, duration, year, rating, episodes, seasons);
-					sDAO.update(s);
-					ID.clear();
-					Title.clear();
-					Type.clear();
-					Duration.clear();
-					Year.clear();
-					Rating.clear();
-					Episodes.clear();
-					Seasons.clear();
-					initialize(null, null);
-					Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "SERIE HAS BEEN MODIFIED");		
+					if(duration>0 && year>0 && episodes>0 && seasons>0) {
+						p.setTitle(title);
+						p.setType(type);;
+						p.setDuration(duration);
+						p.setYear(year);;
+						p.setRating(rating);
+						p.setEpisodes(episodes);
+						p.setSeasons(seasons);
+						
+						Serie s = new Serie (id, title, type, duration, year, rating, episodes, seasons);
+						sDAO.update(s);
+						ID.clear();
+						Title.clear();
+						Type.clear();
+						Duration.clear();
+						Year.clear();
+						Rating.clear();
+						Episodes.clear();
+						Seasons.clear();
+						initialize(null, null);
+						Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "SERIE HAS BEEN MODIFIED");	
+					}else {
+						Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");	
+					}
 				}else {
 					Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "TITLE FIELD IS REQUIRED");	
 				}
@@ -299,7 +307,7 @@ public class Serie_Menu_Controller implements Initializable {
 					if(newValue.isEmpty() || newValue == null) {
 						return true;
 					}
-					if (production.getTitle().contains(newValue)) {
+					if (production.getTitle().toLowerCase().contains(newValue)) {
 						return true;
 					}
 					return false;

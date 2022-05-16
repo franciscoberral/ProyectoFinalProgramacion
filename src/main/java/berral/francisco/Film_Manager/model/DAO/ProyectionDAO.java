@@ -10,12 +10,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import berral.francisco.Film_Manager.interfaces.IProyectionDAO;
 import berral.francisco.Film_Manager.model.DataObject.Cinema;
 import berral.francisco.Film_Manager.model.DataObject.Production;
 import berral.francisco.Film_Manager.model.DataObject.Proyection;
 import berral.francisco.Film_Manager.utils.Connect;
 
-public class ProyectionDAO {
+public class ProyectionDAO implements IProyectionDAO {
 	Connection myConnection = null;
 	
 	CinemaDAO cDAO = new CinemaDAO();

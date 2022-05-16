@@ -97,23 +97,27 @@ public class Cinema_Menu_Controller implements Initializable{
 			String location = Location.getText();
 			Integer rooms = Integer.parseInt(Rooms.getText());
 			Integer capacity = Integer.parseInt(Capacity.getText());
-				
+			
 			Cinema c = cDAO.get(id);
 		
 			if(c == null) {
 				c = cDAO.get(name);
 				if(c == null) {
 					if(Name.getText() != "") {
-						Cinema newC = new Cinema(id, name, address, location, rooms, capacity);
-						cDAO.insert(newC);
-						ID.clear();
-						Name.clear();
-						Address.clear();
-						Location.clear();
-						Rooms.clear();
-						Capacity.clear();
-						initialize(null, null);
-						Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "CINEMA HAS BEEN ADDED");
+						if(id>0 && rooms>0 && capacity>0) {
+							Cinema newC = new Cinema(id, name, address, location, rooms, capacity);
+							cDAO.insert(newC);
+							ID.clear();
+							Name.clear();
+							Address.clear();
+							Location.clear();
+							Rooms.clear();
+							Capacity.clear();
+							initialize(null, null);
+							Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "CINEMA HAS BEEN ADDED");
+						}else {
+							Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");	
+						}
 					}else {
 						Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "NAME FIELD IS REQUIRED");
 					}
@@ -170,20 +174,24 @@ public class Cinema_Menu_Controller implements Initializable{
 			Cinema c = cDAO.get(id);
 			if(c != null) {
 				if(Name.getText() != "") {
-					c.setName(name);
-					c.setAddress(address);
-					c.setLocation(location);
-					c.setRooms(rooms);
-					c.setCapacity(capacity);
-					cDAO.update(c);
-					ID.clear();
-					Name.clear();
-					Address.clear();
-					Location.clear();
-					Rooms.clear();
-					Capacity.clear();
-					initialize(null, null);
-					Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "CINEMA HAS BEEN MODIFIED");
+					if(rooms>0 && capacity>0) {
+						c.setName(name);
+						c.setAddress(address);
+						c.setLocation(location);
+						c.setRooms(rooms);
+						c.setCapacity(capacity);
+						cDAO.update(c);
+						ID.clear();
+						Name.clear();
+						Address.clear();
+						Location.clear();
+						Rooms.clear();
+						Capacity.clear();
+						initialize(null, null);
+						Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "CINEMA HAS BEEN MODIFIED");
+					}else {
+						Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");	
+					}	
 				}else {
 					Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "NAME FIELD IS REQUIRED");	
 				}
@@ -255,7 +263,7 @@ public class Cinema_Menu_Controller implements Initializable{
 					if(newValue == null || newValue.isEmpty()) {
 						return true;
 					}
-					if (cinema.getName().contains(newValue)) {
+					if (cinema.getName().toLowerCase().contains(newValue)) {
 						return true;
 					}
 					return false;

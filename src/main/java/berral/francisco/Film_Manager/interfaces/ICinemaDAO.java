@@ -9,5 +9,6 @@ public interface ICinemaDAO {
 	boolean delete(Cinema c);
 	boolean update(Cinema c);
 	Cinema get(Integer id);
+	Cinema get(String name);
 	List<Cinema> getAll();
 }

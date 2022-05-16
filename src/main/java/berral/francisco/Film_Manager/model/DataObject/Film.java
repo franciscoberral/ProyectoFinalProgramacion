@@ -1,6 +1,8 @@
 package berral.francisco.Film_Manager.model.DataObject;
 
-public class Film extends Production {
+import berral.francisco.Film_Manager.interfaces.IFilm;
+
+public class Film extends Production implements IFilm {
 	
 	public Film() {
 		super();

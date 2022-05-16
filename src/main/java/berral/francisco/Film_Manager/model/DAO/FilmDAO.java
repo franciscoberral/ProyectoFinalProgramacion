@@ -4,10 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import berral.francisco.Film_Manager.interfaces.IFilmDAO;
 import berral.francisco.Film_Manager.model.DataObject.Film;
 import berral.francisco.Film_Manager.utils.Connect;
 
-public class FilmDAO extends ProductionDAO<Film>{
+public class FilmDAO extends ProductionDAO<Film> implements IFilmDAO {
 	private static Connection myConnection = null;
 
 	@Override

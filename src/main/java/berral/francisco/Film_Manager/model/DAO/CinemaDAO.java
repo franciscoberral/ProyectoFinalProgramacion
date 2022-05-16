@@ -8,10 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import berral.francisco.Film_Manager.interfaces.ICinemaDAO;
 import berral.francisco.Film_Manager.model.DataObject.Cinema;
 import berral.francisco.Film_Manager.utils.Connect;
 
-public class CinemaDAO {
+public class CinemaDAO implements ICinemaDAO {
 	Connection myConnection = null;
 
 	public boolean insert(Cinema c) {

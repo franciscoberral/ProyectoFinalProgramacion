@@ -1,6 +1,8 @@
 package berral.francisco.Film_Manager.model.DataObject;
 
-public class Serie extends Production{
+import berral.francisco.Film_Manager.interfaces.ISerie;
+
+public class Serie extends Production implements ISerie {
 
 	public Serie() {
 		super();

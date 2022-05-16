@@ -1,5 +1,5 @@
 package berral.francisco.Film_Manager.interfaces;
 
-public interface IFilm {
+public interface ISerie {
 	String toString();
 }
