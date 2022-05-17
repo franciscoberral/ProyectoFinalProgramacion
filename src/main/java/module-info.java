@@ -5,6 +5,7 @@ module berral.francisco.Film_Manager {
     requires java.sql;
 	requires javafx.base;
 	requires javafx.graphics;
+	requires java.logging;
 
     opens berral.francisco.Film_Manager to javafx.fxml;
     opens berral.francisco.Film_Manager.utils to java.xml.bind;

@@ -7,7 +7,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 /**
- * Clase "Message" que implementa la interfaz "IMessage"
+ * Clase "Message"
  * @author Francisco José Berral Zafra
  *
  */

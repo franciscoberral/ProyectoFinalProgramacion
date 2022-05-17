@@ -48,12 +48,12 @@
                   <Label layoutX="9.0" layoutY="45.0" text="TITLE" />
                   <Label layoutX="9.0" layoutY="89.0" text="TYPE" />
                   <TextField fx:id="Type" layoutX="8.0" layoutY="107.0" prefHeight="25.0" prefWidth="60.0" />
-                  <Label layoutX="9.0" layoutY="134.0" text="RATING" />
-                  <TextField fx:id="Rating" layoutX="8.0" layoutY="151.0" prefHeight="25.0" prefWidth="60.0" />
+                  <Label layoutX="9.0" layoutY="134.0" text="YEAR" />
+                  <TextField fx:id="Year" layoutX="8.0" layoutY="151.0" prefHeight="25.0" prefWidth="60.0" />
                   <Label layoutX="80.0" layoutY="89.0" text="DURATION" />
-                  <Label layoutX="80.0" layoutY="133.0" text="YEAR" />
+                  <Label layoutX="80.0" layoutY="133.0" text="RATING" />
                   <TextField fx:id="Duration" layoutX="79.0" layoutY="107.0" prefHeight="25.0" prefWidth="60.0" />
-                  <TextField fx:id="Year" layoutX="79.0" layoutY="151.0" prefHeight="25.0" prefWidth="58.0" />
+                  <TextField fx:id="Rating" layoutX="79.0" layoutY="151.0" prefHeight="25.0" prefWidth="58.0" />
                   <Button layoutX="8.0" layoutY="299.0" mnemonicParsing="false" onAction="#modifySerie" prefHeight="25.0" prefWidth="149.0" text="UPDATE" />
                   <Button layoutX="8.0" layoutY="269.0" mnemonicParsing="false" onAction="#deleteSerie" prefHeight="25.0" prefWidth="149.0" text="DELETE" />
                   <Button layoutX="8.0" layoutY="239.0" mnemonicParsing="false" onAction="#addSerie" prefHeight="25.0" prefWidth="149.0" text="ADD" />

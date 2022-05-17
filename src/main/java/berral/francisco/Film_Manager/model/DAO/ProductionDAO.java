@@ -13,7 +13,7 @@ import berral.francisco.Film_Manager.model.DataObject.Production;
 import berral.francisco.Film_Manager.utils.Connect;
 
 /**
- * Clase "ProductionDAO" que implementa la interfaz "ICinemaDAO" y hace uso de genéricos
+ * Clase "ProductionDAO" 
  * @author Francisco José Berral Zafra
  *
  */

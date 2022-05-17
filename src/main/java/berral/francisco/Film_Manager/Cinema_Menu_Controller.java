@@ -9,6 +9,7 @@ import java.util.function.Predicate;
 
 import berral.francisco.Film_Manager.model.DAO.CinemaDAO;
 import berral.francisco.Film_Manager.model.DataObject.Cinema;
+import berral.francisco.Film_Manager.utils.Log;
 import berral.francisco.Film_Manager.utils.Message;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -132,20 +133,26 @@ public class Cinema_Menu_Controller implements Initializable{
 							Capacity.clear();
 							initialize(null, null);
 							Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "CINEMA HAS BEEN ADDED");
+							Log.info("CINEMA HAS BEEN ADDED");
 						}else {
-							Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");	
+							Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");
+							Log.severe("ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");
 						}
 					}else {
 						Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "NAME FIELD IS REQUIRED");
+						Log.severe("NAME FIELD IS REQUIRED");
 					}
 				}else {
 					Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "THE CINEMA NAME ALREADY EXISTS");
+					Log.severe("THE CINEMA NAME ALREADY EXISTS");
 				}
 			}else {
-				Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "THE CINEMA ID ALREADY EXISTS");	
+				Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "THE CINEMA ID ALREADY EXISTS");
+				Log.severe("THE CINEMA ID ALREADY EXISTS");
 			}
 		}catch(NumberFormatException e) {
 			Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "THE FIELDS ID, ROOMS AND CAPACITY FROM CINEMA MUST BE AN INTEGER");
+			Log.severe("THE FIELDS ID, ROOMS AND CAPACITY FROM CINEMA MUST BE AN INTEGER");
 		}
 	}
 	
@@ -171,11 +178,14 @@ public class Cinema_Menu_Controller implements Initializable{
 				Capacity.clear();
 				initialize(null, null);
 				Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "CINEMA HAS BEEN DELETED");
+				Log.info("CINEMA HAS BEEN DELETED");
 			}else {
-				Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "CINEMA NOT FOUND");	
+				Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "CINEMA NOT FOUND");
+				Log.severe("CINEMA NOT FOUND");
 			}
 		}catch(NumberFormatException e) {
-			Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "THE FIELD CINEMA ID MUST BE AN INTEGER");	
+			Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "THE FIELD CINEMA ID MUST BE AN INTEGER");
+			Log.severe("THE FIELD CINEMA ID MUST BE AN INTEGER");
 		}
 	}
 	
@@ -214,17 +224,22 @@ public class Cinema_Menu_Controller implements Initializable{
 						Capacity.clear();
 						initialize(null, null);
 						Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "CINEMA HAS BEEN MODIFIED");
+						Log.info("CINEMA HAS BEEN MODIFIED");
 					}else {
-						Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");	
+						Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");
+						Log.severe("ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");
 					}	
 				}else {
 					Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "NAME FIELD IS REQUIRED");	
+					Log.severe("NAME FIELD IS REQUIRED");
 				}
 			}else {
-				Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "CINEMA NOT FOUND");	
+				Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "CINEMA NOT FOUND");
+				Log.severe("CINEMA NOT FOUND");
 			}
 		}catch(NumberFormatException e) {
-			Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "THE FIELDS ID, ROOMS AND CAPACITY FROM CINEMA MUST BE AN INTEGER");	
+			Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "THE FIELDS ID, ROOMS AND CAPACITY FROM CINEMA MUST BE AN INTEGER");
+			Log.severe("THE FIELDS ID, ROOMS AND CAPACITY FROM CINEMA MUST BE AN INTEGER");
 		}
 	}
 	
@@ -284,7 +299,7 @@ public class Cinema_Menu_Controller implements Initializable{
 			return o;
 		});
 		
-		cinemaTable.setItems(FXCollections.observableArrayList(list));
+		cinemaTable.setItems(FXCollections.observableArrayList(ob));
 		
 		FilteredList<Cinema> filList = new FilteredList<>(ob, b -> true);
 		

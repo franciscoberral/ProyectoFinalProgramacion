@@ -10,6 +10,7 @@ import berral.francisco.Film_Manager.model.DAO.FilmDAO;
 import berral.francisco.Film_Manager.model.DAO.ProductionDAO;
 import berral.francisco.Film_Manager.model.DataObject.Film;
 import berral.francisco.Film_Manager.model.DataObject.Production;
+import berral.francisco.Film_Manager.utils.Log;
 import berral.francisco.Film_Manager.utils.Message;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -134,20 +135,26 @@ public class Film_Menu_Controller implements Initializable {
 							Rating.clear();
 							initialize(null, null);
 							Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "FILM HAS BEEN ADDED");
+							Log.info("FILM HAS BEEN ADDED");
 						}else {
-							Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");	
+							Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");
+							Log.severe("ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");
 						}
 					}else {
 						Message.error("ERROR", "ERROR WHEN ENTERING FILM", "TITLE FIELD IS REQUIRED");
+						Log.severe("TITLE FIELD IS REQUIRED");
 					}
 				}else {
 					Message.error("ERROR", "ERROR WHEN ENTERING FILM", "THE FILM TITLE ALREADY EXISTS");
+					Log.severe("THE FILM TITLE ALREADY EXISTS");
 				}
 			}else {
 				Message.error("ERROR", "ERROR WHEN ENTERING FILM", "THE PRODUCTION ID ALREADY EXISTS");	
+				Log.severe("THE PRODUCTION ID ALREADY EXISTS");
 			}
 		}catch(NumberFormatException e) {
 			Message.error("ERROR", "ERROR WHEN ENTERING FILM", "THE FIELDS ID, DURATION AND YEAR FROM FILM MUST BE AN INTEGER");
+			Log.severe("THE FIELDS ID, DURATION AND YEAR FROM FILM MUST BE AN INTEGER");
 		}
 	}
 	
@@ -173,11 +180,14 @@ public class Film_Menu_Controller implements Initializable {
 				Rating.clear();
 				initialize(null, null);
 				Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "FILM HAS BEEN DELETED");
+				Log.info("FILM HAS BEEN DELETED");
 			}else {
-				Message.error("ERROR", "ERROR WHEN ENTERING FILM", "FILM NOT FOUND");	
+				Message.error("ERROR", "ERROR WHEN ENTERING FILM", "FILM NOT FOUND");
+				Log.severe("FILM NOT FOUND");
 			}
 		}catch(NumberFormatException e) {
 				Message.error("ERROR", "ERROR WHEN ENTERING FILM", "THE FIELD FILM ID MUST BE AN INTEGER");
+				Log.severe("THE FIELD FILM ID MUST BE AN INTEGER");
 		}
 	}
 	
@@ -217,18 +227,23 @@ public class Film_Menu_Controller implements Initializable {
 						Year.clear();
 						Rating.clear();
 						initialize(null, null);
-						Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "FILM HAS BEEN MODIFIED");		
+						Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "FILM HAS BEEN MODIFIED");
+						Log.info("FILM HAS BEEN MODIFIED");
 					}else {
-						Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");	
+						Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");
+						Log.severe("ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");
 					}
 				}else {
-					Message.error("ERROR", "ERROR WHEN ENTERING FILM", "TITLE FIELD IS REQUIRED");	
+					Message.error("ERROR", "ERROR WHEN ENTERING FILM", "TITLE FIELD IS REQUIRED");
+					Log.severe("TITLE FIELD IS REQUIRED");
 				}
 			}else {
-				Message.error("ERROR", "ERROR WHEN ENTERING FILM", "FILM NOT FOUND");	
+				Message.error("ERROR", "ERROR WHEN ENTERING FILM", "FILM NOT FOUND");
+				Log.severe("FILM NOT FOUND");
 			}
 		}catch(NumberFormatException e) {
-			Message.error("ERROR", "ERROR WHEN ENTERING FILM", "THE FIELDS ID, DURATION AND YEAR FROM FILM MUST BE AN INTEGER");	
+			Message.error("ERROR", "ERROR WHEN ENTERING FILM", "THE FIELDS ID, DURATION AND YEAR FROM FILM MUST BE AN INTEGER");
+			Log.severe("THE FIELDS ID, DURATION AND YEAR FROM FILM MUST BE AN INTEGER");
 		}
 	}
 	
@@ -288,7 +303,7 @@ public class Film_Menu_Controller implements Initializable {
 			return s;
 		});
 		
-		filmTable.setItems(FXCollections.observableArrayList(list));
+		filmTable.setItems(FXCollections.observableArrayList(ob));
 		
 		FilteredList<Production> filList = new FilteredList<>(ob, b -> true);
 		

@@ -10,6 +10,7 @@ import berral.francisco.Film_Manager.model.DAO.ProductionDAO;
 import berral.francisco.Film_Manager.model.DAO.SerieDAO;
 import berral.francisco.Film_Manager.model.DataObject.Production;
 import berral.francisco.Film_Manager.model.DataObject.Serie;
+import berral.francisco.Film_Manager.utils.Log;
 import berral.francisco.Film_Manager.utils.Message;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -26,6 +27,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Controlador "Serie_Menu_Controller" que implementa "Initializable"
+ * @author Francisco José Berral Zafra
+ *
+ */
 public class Serie_Menu_Controller implements Initializable {
 	
 	SerieDAO sDAO = new SerieDAO();
@@ -84,11 +90,19 @@ public class Serie_Menu_Controller implements Initializable {
 	@FXML
 	private TableColumn<Production, Integer> seasonsCol;
 	
+	/**
+	 * Cambia a la Vista "Main"
+	 * @throws IOException Lanza excepción en caso de error
+	 */
 	@FXML
 	private void switchToMain() throws IOException {
 		App.setRoot("main_menu_view");
 	}
 	
+	/**
+	 * Método que limpia el registro de los TextFields
+	 * @throws IOException Lanza excepción en caso de error
+	 */
 	@FXML
 	private void clear() throws IOException {
 		ID.clear();
@@ -101,6 +115,10 @@ public class Serie_Menu_Controller implements Initializable {
 		Seasons.clear();
 	}
 	
+	/**
+	 * Método asignado al botón "ADD" que permite añadir una serie
+	 * @throws IOException Lanza excepción en caso de error
+	 */
 	@FXML
 	private void addSerie() throws IOException {
 		try {
@@ -137,23 +155,33 @@ public class Serie_Menu_Controller implements Initializable {
 							Seasons.clear();
 							initialize(null, null);
 							Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "SERIE HAS BEEN ADDED");
+							Log.info("SERIE HAS BEEN ADDED");
 						}else {
-							Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");	
+							Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");
+							Log.severe("ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");
 						}
 					}else {
 						Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "TITLE FIELD IS REQUIRED");
+						Log.severe("TITLE FIELD IS REQUIRED");
 					}
 				}else {
 					Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "THE SERIE TITLE ALREADY EXISTS");
+					Log.severe("THE SERIE TITLE ALREADY EXISTS");
 				}
 			}else {
-				Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "THE PRODUCTION ID ALREADY EXISTS");	
+				Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "THE PRODUCTION ID ALREADY EXISTS");
+				Log.severe("THE PRODUCTION ID ALREADY EXISTS");
 			}
 		}catch(NumberFormatException e) {
 			Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "THE FIELDS ID, DURATION, YEAR, EPISODES AND SEASONS FROM SERIE MUST BE AN INTEGER");
+			Log.severe("THE FIELDS ID, DURATION, YEAR, EPISODES AND SEASONS FROM SERIE MUST BE AN INTEGER");
 		}
 	}
 	
+	/**
+	 * Método asignado al botón "DELETE" que permite eliminar una serie
+	 * @throws IOException Lanza excepción en caso de error
+	 */
 	@FXML
 	private void deleteSerie() throws IOException {
 		try {
@@ -174,14 +202,21 @@ public class Serie_Menu_Controller implements Initializable {
 				Seasons.clear();
 				initialize(null, null);
 				Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "SERIE HAS BEEN DELETED");
+				Log.info("SERIE HAS BEEN DELETED");
 			}else {
-				Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "SERIE NOT FOUND");	
+				Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "SERIE NOT FOUND");
+				Log.severe("SERIE NOT FOUND");
 			}
 		}catch(NumberFormatException e) {
 				Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "THE FIELD SERIE ID MUST BE AN INTEGER");
+				Log.severe("THE FIELD SERIE ID MUST BE AN INTEGER");
 		}
 	}
 	
+	/**
+	 * Método asignado al botón "UPDATE" que permite actualizar una serie
+	 * @throws IOException Lanza excepción en caso de error
+	 */
 	@FXML
 	private void modifySerie() throws IOException {
 		try {
@@ -220,21 +255,29 @@ public class Serie_Menu_Controller implements Initializable {
 						Episodes.clear();
 						Seasons.clear();
 						initialize(null, null);
-						Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "SERIE HAS BEEN MODIFIED");	
+						Message.alert("SUCCESS", "OPERATION SUCCESSFULLY", "SERIE HAS BEEN MODIFIED");
+						Log.info("SERIE HAS BEEN MODIFIED");
 					}else {
-						Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");	
+						Message.error("ERROR", "ERROR WHEN ENTERING CINEMA", "ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");
+						Log.severe("ONLY POSITIVE NUMBERS GREATER THAN 0 ARE ALLOWED");
 					}
 				}else {
-					Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "TITLE FIELD IS REQUIRED");	
+					Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "TITLE FIELD IS REQUIRED");
+					Log.severe("TITLE FIELD IS REQUIRED");
 				}
 			}else {
-				Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "SERIE NOT FOUND");	
+				Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "SERIE NOT FOUND");
+				Log.severe("SERIE NOT FOUND");
 			}
 		}catch(NumberFormatException e) {
-			Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "THE FIELDS ID, DURATION, YEAR, EPISODES AND SEASONS FROM SERIE MUST BE AN INTEGER");	
+			Message.error("ERROR", "ERROR WHEN ENTERING SERIE", "THE FIELDS ID, DURATION, YEAR, EPISODES AND SEASONS FROM SERIE MUST BE AN INTEGER");
+			Log.severe("THE FIELDS ID, DURATION, YEAR, EPISODES AND SEASONS FROM SERIE MUST BE AN INTEGER");
 		}
 	}
 	
+	/**
+	 * Método que permite setear a los TextFields los valores de las celdas de la tabla
+	 */
 	@FXML
 	private void onEdit() {
 		if(serieTable.getSelectionModel().getSelectedItem() != null) {
@@ -250,6 +293,9 @@ public class Serie_Menu_Controller implements Initializable {
 		}
 	}
 
+	/**
+	 * Método que permite setear en las celdas de la tabla los valores de los TextFields y filtrar los valores por nombre
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		List<Production> list = (List<Production>) ProductionDAO.getAllSeries();
@@ -297,7 +343,7 @@ public class Serie_Menu_Controller implements Initializable {
 			return o;
 		});
 		
-		serieTable.setItems(FXCollections.observableArrayList(list));
+		serieTable.setItems(FXCollections.observableArrayList(ob));
 		
 		FilteredList<Production> filList = new FilteredList<>(ob, b -> true);
 		
