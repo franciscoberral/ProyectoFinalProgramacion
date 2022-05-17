@@ -1,5 +1,10 @@
 package berral.francisco.Film_Manager.interfaces;
 
+/**
+ * Interfaz "IProduction" que declara los métodos de "Production"
+ * @author Francisco José Berral Zafra
+ *
+ */
 public interface IProduction {
 	Integer getID_F();
 	void setID_F(Integer iD_F);

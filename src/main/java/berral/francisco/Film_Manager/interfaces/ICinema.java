@@ -1,5 +1,11 @@
 package berral.francisco.Film_Manager.interfaces;
 
+
+/**
+ * Interfaz "ICinema" que declara los métodos de "Cinema"
+ * @author Francisco José Berral Zafra
+ *
+ */
 public interface ICinema {
 	Integer getID_C();
 	void setID_C(Integer iD_C);

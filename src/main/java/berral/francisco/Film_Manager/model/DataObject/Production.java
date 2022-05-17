@@ -3,7 +3,7 @@ package berral.francisco.Film_Manager.model.DataObject;
 import berral.francisco.Film_Manager.interfaces.IProduction;
 
 /**
- * Clase "Producción" que implementa la interfaz "IProduction"
+ * Clase "Production" que implementa la interfaz "IProduction"
  * @author Francisco José Berral Zafra
  *
  */

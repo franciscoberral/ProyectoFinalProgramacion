@@ -16,11 +16,21 @@ import berral.francisco.Film_Manager.model.DataObject.Production;
 import berral.francisco.Film_Manager.model.DataObject.Proyection;
 import berral.francisco.Film_Manager.utils.Connect;
 
+/**
+ * Clase "ProyectionDAO" que implementa la interfaz "IProyectionDAO"
+ * @author Francisco José Berral Zafra
+ *
+ */
 public class ProyectionDAO implements IProyectionDAO {
 	Connection myConnection = null;
 	
 	CinemaDAO cDAO = new CinemaDAO();
 	
+	/**
+	 * Método que permite insertar una proyección en la BBDD
+	 * @param p Proyección a insertar
+	 * @return Si la proyección es insertada o no
+	 */
 	public boolean insert(Proyection p) {
 		boolean result = false;
 		myConnection = Connect.getConnect();
@@ -40,6 +50,11 @@ public class ProyectionDAO implements IProyectionDAO {
 		return result;
 	}
 	
+	/**
+	 * Método que permite eliminar una proyección en la BBDD
+	 * @param p Proyección a borrar
+	 * @return Si la proyección es borrada o no
+	 */
 	public boolean delete(Proyection p) {
 		boolean result = false;
 		myConnection = Connect.getConnect();
@@ -77,6 +92,13 @@ public class ProyectionDAO implements IProyectionDAO {
 		return result;
 	}
 	
+	/**
+	 * Método que obtener una proyección por la ID del cine, la ID de la producción y la fecha de inicio de la proyección
+	 * @param iD_C ID del cine
+	 * @param iD_F ID de la producción
+	 * @param start Fecha de la proyección
+	 * @return La proyección encontrada o null si no se ha encontrado
+	 */
 	public Proyection get(Integer iD_C, Integer iD_F, LocalDate start) {
 		Proyection p = null;
 		String query = "SELECT ID_C, ID_F, StartDate, FinishDate FROM Proyection WHERE (ID_C=? AND ID_F=? AND StartDate=?)";
@@ -101,6 +123,10 @@ public class ProyectionDAO implements IProyectionDAO {
 		return p;
 	}
 
+	/**
+	 * Método para guardar todas las proyecciones en una lista
+	 * @return Lista con las proyecciones añadidas
+	 */
 	public List<Proyection> getAll() {
 		List<Proyection> list = new ArrayList<Proyection>();
 		myConnection = Connect.getConnect();

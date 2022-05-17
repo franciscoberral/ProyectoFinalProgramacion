@@ -12,7 +12,7 @@ import javax.xml.bind.Unmarshaller;
 import berral.francisco.Film_Manager.interfaces.IConnect;
 
 /**
- * Clase "Conexión" que implementa la interfaz "IConnect"
+ * Clase "Connect" que implementa la interfaz "IConnect"
  * @author Francisco José Berral Zafra
  *
  */

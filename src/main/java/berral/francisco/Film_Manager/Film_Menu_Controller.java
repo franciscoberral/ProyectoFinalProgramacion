@@ -26,6 +26,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Controlador "Film_Menu_Controller" que implementa "Initializable"
+ * @author Francisco José Berral Zafra
+ *
+ */
 public class Film_Menu_Controller implements Initializable {
 	
 	FilmDAO fDAO = new FilmDAO();
@@ -72,11 +77,19 @@ public class Film_Menu_Controller implements Initializable {
 	@FXML
 	private TableColumn<Production, String> ratingCol;
 	
+	/**
+	 * Cambia a la Vista "Main"
+	 * @throws IOException Lanza excepción en caso de error
+	 */
 	@FXML
 	private void switchToMain() throws IOException {
 		App.setRoot("main_menu_view");
 	}
 	
+	/**
+	 * Método que limpia el registro de los TextFields
+	 * @throws IOException Lanza excepción en caso de error
+	 */
 	@FXML
 	private void clear() throws IOException {
 		ID.clear();
@@ -87,6 +100,10 @@ public class Film_Menu_Controller implements Initializable {
 		Rating.clear();
 	}
 	
+	/**
+	 * Método asignado al botón "ADD" que permite añadir una película
+	 * @throws IOException Lanza excepción en caso de error
+	 */
 	@FXML
 	private void addFilm() throws IOException {
 		try {
@@ -134,6 +151,10 @@ public class Film_Menu_Controller implements Initializable {
 		}
 	}
 	
+	/**
+	 * Método asignado al botón "DELETE" que permite eliminar una película
+	 * @throws IOException Lanza excepción en caso de error
+	 */
 	@FXML
 	private void deleteFilm() throws IOException {
 		try {
@@ -160,6 +181,10 @@ public class Film_Menu_Controller implements Initializable {
 		}
 	}
 	
+	/**
+	 * Método asignado al botón "UPDATE" que permite actualizar una película
+	 * @throws IOException Lanza excepción en caso de error
+	 */
 	@FXML
 	private void modifyFilm() throws IOException {
 		try {
@@ -207,6 +232,9 @@ public class Film_Menu_Controller implements Initializable {
 		}
 	}
 	
+	/**
+	 * Método que permite setear a los TextFields los valores de las celdas de la tabla
+	 */
 	@FXML
 	private void onEdit() {
 		if(filmTable.getSelectionModel().getSelectedItem() != null) {
@@ -220,6 +248,9 @@ public class Film_Menu_Controller implements Initializable {
 		}
 	}
 
+	/**
+	 * Método que permite setear en las celdas de la tabla los valores de los TextFields y filtrar los valores por nombre
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		List<Production> list = (List<Production>) ProductionDAO.getAllFilms();
@@ -267,7 +298,7 @@ public class Film_Menu_Controller implements Initializable {
 					if(newValue.isEmpty() || newValue == null) {
 						return true;
 					}
-					if (production.getTitle().toLowerCase().contains(newValue)) {
+					if (production.getTitle().toLowerCase().contains(newValue.toLowerCase())) {
 						return true;
 					}
 					return false;

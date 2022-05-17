@@ -12,11 +12,26 @@ import berral.francisco.Film_Manager.model.DataObject.Film;
 import berral.francisco.Film_Manager.model.DataObject.Production;
 import berral.francisco.Film_Manager.utils.Connect;
 
+/**
+ * Clase "ProductionDAO" que implementa la interfaz "ICinemaDAO" y hace uso de genéricos
+ * @author Francisco José Berral Zafra
+ *
+ */
 public abstract class ProductionDAO<T> {
 	private static Connection myConnection = null;
 
+	/**
+	 * Método abstracto que permite insertar un objeto genérico de una clase hija en la BBDD
+	 * @param obj Objeto de tipo genérico a insertar
+	 * @return Si la producción es insertada o no
+	 */
 	public abstract boolean insert(T obj);
 
+	/**
+	 * Método que permite eliminar una producción de la BBDD
+	 * @param p Producción a eliminar
+	 * @return Si la producción es borrada o no
+	 */
 	public static boolean delete(Production p) {
 		boolean result = false;
 		myConnection = Connect.getConnect();
@@ -33,8 +48,18 @@ public abstract class ProductionDAO<T> {
 		return result;
 	}
 
+	/**
+	 * Método abstracto que permite actualizar un objeto genérico de una clase hija en la BBDD
+	 * @param obj Objeto de tipo genérico a actualizar
+	 * @return Si la producción es actualizada o no
+	 */
 	public abstract boolean update(T obj);
 	
+	/**
+	 * Método que obtener una producción por su ID
+	 * @param id ID de la producción a buscar
+	 * @return La producción encontrada o null si no se ha encontrado
+	 */
 	public static Production get(Integer id) {
 		Production p = null;
 		myConnection = Connect.getConnect();
@@ -60,6 +85,11 @@ public abstract class ProductionDAO<T> {
 		return p;
 	}
 	
+	/**
+	 * Método que obtener una producción por su título
+	 * @param title Título de la producción a buscar
+	 * @return La producción encontrada o null si no se ha encontrado
+	 */
 	public static Production get(String title) {
 		Production p = null;
 		myConnection = Connect.getConnect();
@@ -85,6 +115,10 @@ public abstract class ProductionDAO<T> {
 		return p;
 	}
 
+	/**
+	 * Método para guardar todas las producciones en una lista
+	 * @return Lista con las producciones añadidas
+	 */
 	public static List<Production> getAll() {
 		List<Production> list = new ArrayList<Production>();
 		myConnection = Connect.getConnect();
@@ -112,6 +146,10 @@ public abstract class ProductionDAO<T> {
 		return list;
 	}
 	
+	/**
+	 * Método para guardar todas las películas en una lista
+	 * @return Lista con las películas añadidas
+	 */
 	public static List<Production> getAllFilms() {
 		List<Production> list = new ArrayList<Production>();
 		myConnection = Connect.getConnect();
@@ -139,6 +177,10 @@ public abstract class ProductionDAO<T> {
 		return list;
 	}
 	
+	/**
+	 * Método para guardar todas las series en una lista
+	 * @return Lista con las series añadidas
+	 */
 	public static List<Production> getAllSeries() {
 		List<Production> list = new ArrayList<Production>();
 		myConnection = Connect.getConnect();

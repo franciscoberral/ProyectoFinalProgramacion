@@ -5,7 +5,11 @@ import java.time.LocalDate;
 import berral.francisco.Film_Manager.model.DataObject.Cinema;
 import berral.francisco.Film_Manager.model.DataObject.Production;
 
-
+/**
+ * Interfaz "IProyection" que declara los métodos de "Proyection"
+ * @author Francisco José Berral Zafra
+ *
+ */
 public interface IProyection {
 	Cinema getC();
 	void setC(Cinema c);

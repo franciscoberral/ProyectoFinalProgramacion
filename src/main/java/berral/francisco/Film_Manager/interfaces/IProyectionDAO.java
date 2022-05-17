@@ -5,6 +5,11 @@ import java.util.List;
 
 import berral.francisco.Film_Manager.model.DataObject.Proyection;
 
+/**
+ * Interfaz "IProyectionDAO" que declara los métodos de "ProyectionDAO"
+ * @author Francisco José Berral Zafra
+ *
+ */
 public interface IProyectionDAO {
 	boolean insert(Proyection p);
 	boolean delete(Proyection p);

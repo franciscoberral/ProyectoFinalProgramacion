@@ -307,7 +307,7 @@ public class Serie_Menu_Controller implements Initializable {
 					if(newValue.isEmpty() || newValue == null) {
 						return true;
 					}
-					if (production.getTitle().toLowerCase().contains(newValue)) {
+					if (production.getTitle().toLowerCase().contains(newValue.toLowerCase())) {
 						return true;
 					}
 					return false;

@@ -12,9 +12,19 @@ import berral.francisco.Film_Manager.interfaces.ICinemaDAO;
 import berral.francisco.Film_Manager.model.DataObject.Cinema;
 import berral.francisco.Film_Manager.utils.Connect;
 
+/**
+ * Clase "CinemaDAO" que implementa la interfaz "ICinemaDAO"
+ * @author Francisco José Berral Zafra
+ *
+ */
 public class CinemaDAO implements ICinemaDAO {
 	Connection myConnection = null;
 
+	/**
+	 * Método que permite insertar un cine en la BBDD
+	 * @param c Cine a insertar
+	 * @return Si el cine es insertado o no
+	 */
 	public boolean insert(Cinema c) {
 		boolean result = false;
 		myConnection = Connect.getConnect();
@@ -36,6 +46,11 @@ public class CinemaDAO implements ICinemaDAO {
 		return result;
 	}
 
+	/**
+	 * Método que permite eliminar un cine en la BBDD
+	 * @param c Cine a borrar
+	 * @return Si el cine es borrado o no
+	 */
 	public boolean delete(Cinema c) {
 		boolean result = false;
 		myConnection = Connect.getConnect();
@@ -52,6 +67,11 @@ public class CinemaDAO implements ICinemaDAO {
 		return result;
 	}
 
+	/**
+	 * Método que permite actualizar un cine en la BBDD
+	 * @param c Cine a actualizar
+	 * @return Si el cine es actualizado o no
+	 */
 	public boolean update(Cinema c) {
 		boolean result = false;
 		myConnection = Connect.getConnect();
@@ -73,6 +93,11 @@ public class CinemaDAO implements ICinemaDAO {
 		return result;
 	}
 	
+	/**
+	 * Método que obtener un cine por su ID
+	 * @param id ID del cine a buscar
+	 * @return El cine encontrado o null si no se ha encontrado
+	 */
 	public Cinema get(Integer id) {
 		Cinema c = null;
 		myConnection = Connect.getConnect();
@@ -96,6 +121,11 @@ public class CinemaDAO implements ICinemaDAO {
 		return c;
 	}
 	
+	/**
+	 * Método que obtener un cine por su nombre
+	 * @param name Nombre del cine a buscar
+	 * @return El cine encontrado o null si no se ha encontrado
+	 */
 	public Cinema get(String name) {
 		Cinema c = null;
 		myConnection = Connect.getConnect();
@@ -119,6 +149,10 @@ public class CinemaDAO implements ICinemaDAO {
 		return c;
 	}
 
+	/**
+	 * Método para guardar todos los cines en una lista
+	 * @return Lista con los cines añadidos
+	 */
 	public List<Cinema> getAll() {
 		List<Cinema> list = new ArrayList<Cinema>();
 		myConnection = Connect.getConnect();

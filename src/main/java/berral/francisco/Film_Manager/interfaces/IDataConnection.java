@@ -1,5 +1,10 @@
 package berral.francisco.Film_Manager.interfaces;
 
+/**
+ * Interfaz "IDataConnection" que declara los métodos de "DataConnection"
+ * @author Francisco José Berral Zafra
+ *
+ */
 public interface IDataConnection {
 	String getServer();
 	void setServer(String server);

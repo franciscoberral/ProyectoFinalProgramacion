@@ -8,9 +8,19 @@ import berral.francisco.Film_Manager.interfaces.IFilmDAO;
 import berral.francisco.Film_Manager.model.DataObject.Film;
 import berral.francisco.Film_Manager.utils.Connect;
 
+/**
+ * Clase "FilmDAO" que implementa la interfaz "IFilmDAO" y hereda de "ProductionDAO"
+ * @author Francisco José Berral Zafra
+ *
+ */
 public class FilmDAO extends ProductionDAO<Film> implements IFilmDAO {
 	private static Connection myConnection = null;
 
+	/**
+	 * Método que permite insertar una película en la producción
+	 * @param f Película a insertar
+	 * @return Si la película es insertado o no
+	 */
 	@Override
 	public boolean insert(Film f) {
 		boolean result = false;
@@ -33,6 +43,11 @@ public class FilmDAO extends ProductionDAO<Film> implements IFilmDAO {
 		return result;
 	}
 	
+	/**
+	 * Método que permite actualizar una película de la producción
+	 * @param f Película a actualizar
+	 * @return Si la película es actualizada o no
+	 */
 	@Override
 	public boolean update(Film f) {
 		boolean result = false;

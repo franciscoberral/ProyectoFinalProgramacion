@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import berral.francisco.Film_Manager.interfaces.IDataConnection;
 
 /**
- * Clase "Conexión de Datos" que implementa la interfaz "IDataConnection"
+ * Clase "DataConnection" que implementa la interfaz "IDataConnection"
  * @author Francisco José Berral Zafra
  *
  */

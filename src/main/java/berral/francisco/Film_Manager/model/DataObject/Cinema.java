@@ -3,7 +3,7 @@ package berral.francisco.Film_Manager.model.DataObject;
 import berral.francisco.Film_Manager.interfaces.ICinema;
 
 /**
- * Clase "Cine" que implementa la interfaz "ICinema"
+ * Clase "Cinema" que implementa la interfaz "ICinema"
  * @author Francisco José Berral Zafra
  *
  */

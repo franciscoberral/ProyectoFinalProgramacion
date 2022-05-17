@@ -2,17 +2,16 @@ package berral.francisco.Film_Manager.utils;
 
 import java.io.IOException;
 
-import berral.francisco.Film_Manager.interfaces.IMessage;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 /**
- * Clase "Mensaje" que implementa la interfaz "IMessage"
+ * Clase "Message" que implementa la interfaz "IMessage"
  * @author Francisco José Berral Zafra
  *
  */
-public class Message implements IMessage {
+public class Message {
 	/**
 	 * Método para mostrar la ventana de alerta
 	 * @param title Título de la alerta

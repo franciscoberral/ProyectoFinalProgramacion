@@ -8,9 +8,19 @@ import berral.francisco.Film_Manager.interfaces.ISerieDAO;
 import berral.francisco.Film_Manager.model.DataObject.Serie;
 import berral.francisco.Film_Manager.utils.Connect;
 
+/**
+ * Clase "SerieDAO" que implementa la interfaz "ISerieDAO" y hereda de "ProductionDAO"
+ * @author Francisco José Berral Zafra
+ *
+ */
 public class SerieDAO extends ProductionDAO<Serie> implements ISerieDAO {
 	private static Connection myConnection = null;
 
+	/**
+	 * Método que permite insertar una serie en la producción
+	 * @param s Serie a insertar
+	 * @return Si la serie es insertada o no
+	 */
 	@Override
 	public boolean insert(Serie s) {
 		boolean result = false;
@@ -35,6 +45,11 @@ public class SerieDAO extends ProductionDAO<Serie> implements ISerieDAO {
 		return result;
 	}
 	
+	/**
+	 * Método que permite actualizar una serie de la producción
+	 * @param s Serie a actualizar
+	 * @return Si la serie es actualizada o no
+	 */
 	@Override
 	public boolean update(Serie s) {
 		boolean result = false;

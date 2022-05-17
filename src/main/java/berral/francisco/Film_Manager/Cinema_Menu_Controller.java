@@ -25,6 +25,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Controlador "Cinema_Menu_Controller" que implementa "Initializable"
+ * @author Francisco José Berral Zafra
+ *
+ */
 public class Cinema_Menu_Controller implements Initializable{
 	CinemaDAO cDAO = new CinemaDAO();
 	
@@ -70,11 +75,19 @@ public class Cinema_Menu_Controller implements Initializable{
 	@FXML
 	private TableColumn<Cinema, Integer> capacityCol;
 	
+	/**
+	 * Cambia a la Vista "Main"
+	 * @throws IOException Lanza excepción en caso de error
+	 */
 	@FXML
 	private void switchToMain() throws IOException {
 		App.setRoot("main_menu_view");
 	}
 	
+	/**
+	 * Método que limpia el registro de los TextFields
+	 * @throws IOException Lanza excepción en caso de error
+	 */
 	@FXML
 	private void clear() throws IOException {
 		ID.clear();
@@ -85,6 +98,10 @@ public class Cinema_Menu_Controller implements Initializable{
 		Capacity.clear();
 	}
 	
+	/**
+	 * Método asignado al botón "ADD" que permite añadir un cine
+	 * @throws IOException Lanza excepción en caso de error
+	 */
 	@FXML
 	private void addCinema() throws IOException {
 		try {
@@ -132,6 +149,10 @@ public class Cinema_Menu_Controller implements Initializable{
 		}
 	}
 	
+	/**
+	 * Método asignado al botón "DELETE" que permite eliminar un cine
+	 * @throws IOException Lanza excepción en caso de error
+	 */
 	@FXML
 	private void deleteCinema() throws IOException {
 		try {
@@ -158,6 +179,10 @@ public class Cinema_Menu_Controller implements Initializable{
 		}
 	}
 	
+	/**
+	 * Método asignado al botón "UPDATE" que permite actualizar un cine
+	 * @throws IOException Lanza excepción en caso de error
+	 */
 	@FXML
 	private void modifyCinema() throws IOException {
 		try {
@@ -203,6 +228,9 @@ public class Cinema_Menu_Controller implements Initializable{
 		}
 	}
 	
+	/**
+	 * Método que permite setear a los TextFields los valores de las celdas de la tabla
+	 */
 	@FXML
 	private void onEdit() {
 		if(cinemaTable.getSelectionModel().getSelectedItem() != null) {
@@ -216,6 +244,9 @@ public class Cinema_Menu_Controller implements Initializable{
 		}
 	}
 
+	/**
+	 * Método que permite setear en las celdas de la tabla los valores de los TextFields y filtrar los valores por nombre
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		List<Cinema> list = (List<Cinema>) cDAO.getAll();
@@ -263,7 +294,10 @@ public class Cinema_Menu_Controller implements Initializable{
 					if(newValue == null || newValue.isEmpty()) {
 						return true;
 					}
-					if (cinema.getName().toLowerCase().contains(newValue)) {
+					if (cinema.getName().contains(newValue)) {
+						return true;
+					}
+					if (cinema.getName().toLowerCase().contains(newValue.toLowerCase())) {
 						return true;
 					}
 					return false;

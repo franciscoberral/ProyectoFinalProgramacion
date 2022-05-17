@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import berral.francisco.Film_Manager.interfaces.IProyection;
 
 /**
- * Clase "Proyección" que implementa la interfaz "IProyection"
+ * Clase "Proyection" que implementa la interfaz "IProyection"
  * @author Francisco José Berral Zafra
  *
  */
