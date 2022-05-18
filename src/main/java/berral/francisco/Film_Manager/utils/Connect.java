@@ -60,7 +60,7 @@ public class Connect implements IConnect {
 		try {
 			context = JAXBContext.newInstance(DataConnection.class);
 			Unmarshaller um = context.createUnmarshaller();
-			DataConnection newDC = (DataConnection) um.unmarshal(new File(file));
+			DataConnection newDC = (DataConnection) um.unmarshal(Connect.class.getResource("/berral/francisco/Connection/connection.xml"));
 			dataCon = newDC;
 		}catch(JAXBException e){
 			e.printStackTrace();
